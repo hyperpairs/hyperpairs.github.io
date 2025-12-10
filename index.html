@@ -1,464 +1,431 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>HyperPairs – Hedged Pair Trading on Hyperliquid</title>
-<style>
-:root {
---bg-dark: #020617;
---accent: #22d3ee;
---accent-strong: #38bdf8;
---text-main: #e5e7eb;
---text-muted: #9ca3af;
---border-subtle: rgba(148, 163, 184, 0.35);
-}
-* {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-}
-body {
-font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-background: radial-gradient(circle at top, #0b1120 0, #020617 45%, #020617 100%);
-color: var(--text-main);
-min-height: 100vh;
-line-height: 1.5;
-overflow-x: hidden;
-}
-.bg-grid {
-position: fixed;
-inset: 0;
-pointer-events: none;
-opacity: 0.16;
-background-image:
-linear-gradient(to right, rgba(148, 163, 184, 0.22) 1px, transparent 1px),
-linear-gradient(to bottom, rgba(148, 163, 184, 0.22) 1px, transparent 1px);
-background-size: 80px 80px;
-mask-image: radial-gradient(circle at top, black 0, black 40%, transparent 70%);
-z-index: -2;
-}
-.bg-glow {
-position: fixed;
-inset: 0;
-pointer-events: none;
-background:
-radial-gradient(circle at 10% 0%, rgba(56, 189, 248, 0.25), transparent 55%),
-radial-gradient(circle at 90% 10%, rgba(59, 130, 246, 0.25), transparent 55%);
-opacity: 0.8;
-z-index: -3;
-}
-.page-shell {
-max-width: 960px;
-margin: 0 auto;
-padding: 24px 18px 40px;
-}
-header {
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 16px;
-padding-bottom: 20px;
-}
-.brand {
-display: flex;
-align-items: center;
-gap: 10px;
-}
-.brand-mark {
-width: 30px;
-height: 30px;
-border-radius: 999px;
-background:
-radial-gradient(circle at 20% 20%, #e0f2fe, transparent 45%),
-conic-gradient(from 200deg, #22d3ee, #38bdf8, #4f46e5, #22d3ee);
-box-shadow: 0 0 20px rgba(56, 189, 248, 0.7);
-position: relative;
-overflow: hidden;
-}
-.brand-mark::after {
-content: "";
-position: absolute;
-inset: 18%;
-border-radius: inherit;
-border: 2px solid rgba(15, 23, 42, 0.8);
-}
-.brand-text {
-display: flex;
-flex-direction: column;
-gap: 2px;
-}
-.brand-name {
-font-weight: 600;
-letter-spacing: 0.08em;
-text-transform: uppercase;
-font-size: 0.9rem;
-}
-.brand-tagline {
-font-size: 0.8rem;
-color: var(--text-muted);
-}
-.hero {
-padding-top: 20px;
-padding-bottom: 24px;
-display: grid;
-grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-gap: 24px;
-align-items: center;
-}
-.hero-kicker {
-font-size: 0.78rem;
-display: inline-flex;
-align-items: center;
-gap: 8px;
-padding: 4px 10px;
-border-radius: 999px;
-background: rgba(15, 23, 42, 0.9);
-border: 1px solid rgba(148, 163, 184, 0.4);
-color: var(--text-muted);
-margin-bottom: 10px;
-backdrop-filter: blur(16px);
-}
-.hero-kicker-pill {
-padding: 2px 8px;
-border-radius: 999px;
-font-size: 0.7rem;
-text-transform: uppercase;
-letter-spacing: 0.12em;
-background: rgba(56, 189, 248, 0.15);
-color: var(--accent-strong);
-border: 1px solid rgba(56, 189, 248, 0.7);
-}
-.hero-title {
-font-size: clamp(2.1rem, 3.3vw, 2.6rem);
-line-height: 1.1;
-letter-spacing: -0.04em;
-margin-bottom: 10px;
-}
-.hero-title span.gradient {
-background: linear-gradient(to right, #e0f2fe, #38bdf8, #a855f7);
--webkit-background-clip: text;
-background-clip: text;
-color: transparent;
-}
-.hero-subtitle {
-font-size: 0.96rem;
-color: var(--text-muted);
-max-width: 30rem;
-margin-bottom: 16px;
-}
-.hero-bullets {
-font-size: 0.85rem;
-color: var(--text-muted);
-margin-bottom: 18px;
-}
-.hero-bullets ul {
-list-style: none;
-}
-.hero-bullets li {
-display: flex;
-gap: 8px;
-margin-bottom: 4px;
-}
-.dash {
-font-size: 0.9em;
-color: var(--accent-strong);
-margin-top: 1px;
-}
-.hero-cta-row {
-display: flex;
-flex-wrap: wrap;
-gap: 10px;
-align-items: center;
-margin-bottom: 10px;
-}
-.primary-cta {
-padding: 7px 14px;
-border-radius: 999px;
-border: 1px solid rgba(148, 163, 184, 0.55);
-background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), rgba(15, 23, 42,
-0.96));
-color: var(--text-main);
-font-size: 0.84rem;
-font-weight: 500;
-display: inline-flex;
-align-items: center;
-gap: 6px;
-cursor: pointer;
-text-decoration: none;
-backdrop-filter: blur(16px);
-}
-.primary-cta span.dot {
-display: inline-block;
-width: 7px;
-height: 7px;
-border-radius: 999px;
-background: var(--accent);
-box-shadow: 0 0 12px rgba(56, 189, 248, 0.9);
-}
-.secondary-cta {
-border-radius: 999px;
-padding: 7px 14px;
-border: 1px solid rgba(148, 163, 184, 0.55);
-background: rgba(15, 23, 42, 0.8);
-color: var(--text-muted);
-font-size: 0.84rem;
-display: inline-flex;
-align-items: center;
-gap: 6px;
-cursor: pointer;
-text-decoration: none;
-}
-.hero-caption {
-font-size: 0.78rem;
-color: var(--text-muted);
-}
-.hero-card {
-border-radius: 18px;
-border: 1px solid var(--border-subtle);
-background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.14), rgba(15, 23, 42,
-0.96));
-padding: 14px 14px 12px;
-position: relative;
-overflow: hidden;
-font-size: 0.8rem;
-}
-.hero-card-header {
-display: flex;
-align-items: center;
-justify-content: space-between;
-margin-bottom: 10px;
-color: var(--text-muted);
-}
-.pill-soft {
-padding: 3px 9px;
-border-radius: 999px;
-background: rgba(15, 23, 42, 0.9);
-border: 1px solid rgba(148, 163, 184, 0.6);
-display: inline-flex;
-align-items: center;
-gap: 6px;
-font-size: 0.72rem;
-}
-.pill-soft span.dot {
-width: 6px;
-height: 6px;
-border-radius: 999px;
-background: #4ade80;
-box-shadow: 0 0 10px rgba(74, 222, 128, 0.9);
-}
-.pair-row {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 9px 10px;
-border-radius: 12px;
-background: rgba(15, 23, 42, 0.95);
-border: 1px solid rgba(148, 163, 184, 0.5);
-margin-bottom: 10px;
-}
-.pair-main {
-display: flex;
-align-items: center;
-gap: 8px;
-font-size: 0.78rem;
-}
-.token-pill {
-border-radius: 999px;
-padding: 4px 9px;
-background: rgba(15, 23, 42, 0.9);
-border: 1px solid rgba(148, 163, 184, 0.5);
-}
-.pair-meta {
-text-align: right;
-font-size: 0.75rem;
-color: var(--text-muted);
-}
-.pair-meta strong {
-display: block;
-color: var(--text-main);
-}
-.card-stats-row {
-display: flex;
-gap: 8px;
-margin-bottom: 10px;
-}
-.stat-chip {
-flex: 1;
-padding: 7px 8px;
-border-radius: 12px;
-background: rgba(15, 23, 42, 0.94);
-border: 1px solid rgba(148, 163, 184, 0.45);
-color: var(--text-muted);
-font-size: 0.74rem;
-}
-.stat-chip strong {
-display: block;
-color: var(--text-main);
-font-size: 0.82rem;
-margin-bottom: 2px;
-}
-.card-footnote {
-font-size: 0.72rem;
-color: var(--text-muted);
-display: flex;
-justify-content: space-between;
-gap: 8px;
-}
-.section {
-border-radius: 18px;
-padding: 16px 16px 14px;
-background: rgba(15, 23, 42, 0.94);
-border: 1px solid var(--border-subtle);
-margin-bottom: 18px;
-}
-.section-title {
-font-size: 0.95rem;
-margin-bottom: 4px;
-}
-.section-kicker {
-text-transform: uppercase;
-letter-spacing: 0.16em;
-font-size: 0.68rem;
-color: var(--accent-strong);
-margin-bottom: 4px;
-}
-.section-body {
-font-size: 0.86rem;
-color: var(--text-muted);
-}
-.section-body ul {
-list-style: none;
-margin-top: 4px;
-}
-.section-body li {
-margin-bottom: 4px;
-display: flex;
-gap: 8px;
-}
-.social-row {
-display: flex;
-flex-wrap: wrap;
-gap: 10px;
-margin-top: 10px;
-font-size: 0.82rem;
-}
-.social-pill {
-border-radius: 999px;
-padding: 6px 12px;
-border: 1px solid rgba(148, 163, 184, 0.6);
-background: rgba(15, 23, 42, 0.9);
-color: var(--text-muted);
-text-decoration: none;
-cursor: pointer;
-}
-footer {
-margin-top: 20px;
-padding-top: 14px;
-border-top: 1px solid rgba(30, 64, 175, 0.7);
-font-size: 0.78rem;
-display: flex;
-justify-content: space-between;
-gap: 10px;
-color: var(--text-muted);
-flex-wrap: wrap;
-}
-@media (max-width: 780px) {
-.hero {
-grid-template-columns: minmax(0, 1fr);
-}
-.hero-card {
-order: -1;
-}
-header {
-flex-direction: column;
-align-items: flex-start;
-}
-}
-@media (max-width: 640px) {
-.page-shell {
-padding-inline: 14px;
-}
-.hero-title {
-font-size: 1.9rem;
-}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HyperPairs – Hedged Relative-Value Trading on Hyperliquid</title>
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-soft: #020817;
+      --accent: #22d3ee;
+      --accent-strong: #38bdf8;
+      --accent-purple: #6366f1;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.35);
+      --btn-primary: #2563eb;
+      --btn-primary-hover: #1d4ed8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        sans-serif;
+      background:
+        radial-gradient(circle at top, #0b1120 0, #020617 45%, #020617 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.16;
+      background-image:
+        linear-gradient(to right, rgba(15, 23, 42, 0.7) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.7) 1px, transparent 1px);
+      background-size: 90px 90px;
+      mask-image: radial-gradient(circle at top, black 0, black 40%, transparent 70%);
+      z-index: -2;
+    }
+
+    .bg-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(56, 189, 248, 0.28), transparent 55%),
+        radial-gradient(circle at 80% 10%, rgba(99, 102, 241, 0.24), transparent 55%);
+      opacity: 0.9;
+      z-index: -3;
+    }
+
+    .page-shell {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 20%, #e0f2fe, transparent 55%),
+        conic-gradient(from 210deg, #22d3ee, #38bdf8, #6366f1, #22d3ee);
+      position: relative;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.8);
+    }
+
+    .logo-icon::before {
+      content: "";
+      position: absolute;
+      inset: 18%;
+      border-radius: inherit;
+      background: radial-gradient(circle at 60% 40%, #0f172a, #020617);
+      box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.95);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-name {
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.92rem;
+    }
+
+    .brand-tagline {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .hero {
+      padding-top: 12px;
+      padding-bottom: 24px;
+    }
+
+    .hero-kicker {
+      font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      backdrop-filter: blur(16px);
+    }
+
+    .hero-kicker-pill {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-strong);
+      border: 1px solid rgba(56, 189, 248, 0.7);
+    }
+
+    .hero-title {
+      font-size: clamp(2.3rem, 3.4vw, 2.8rem);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      margin-bottom: 14px;
+    }
+
+    .hero-title span.gradient {
+      background: linear-gradient(to right, #e0f2fe, #38bdf8, #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 36rem;
+      margin-bottom: 20px;
+    }
+
+    .info-box {
+      margin-bottom: 22px;
+      padding: 18px 20px;
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(18px);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      font-size: 0.82rem;
+    }
+
+    .info-col h3 {
+      font-size: 0.86rem;
+      margin-bottom: 6px;
+    }
+
+    .info-col p {
+      color: var(--text-muted);
+    }
+
+    .hero-bullets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 20px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .hero-bullets li {
+      list-style: none;
+      position: relative;
+      padding-left: 14px;
+    }
+
+    .hero-bullets li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: -1px;
+      color: var(--accent-strong);
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .btn-primary {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      background: var(--btn-primary);
+      color: #f9fafb;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 14px 35px rgba(37, 99, 235, 0.55);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(34, 211, 238, 0.9);
+    }
+
+    .btn-primary:hover {
+      background: var(--btn-primary-hover);
+    }
+
+    .btn-secondary {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-caption {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .social-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+      font-size: 0.82rem;
+    }
+
+    .social-pill {
+      border-radius: 999px;
+      padding: 6px 12px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-muted);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    footer {
+      margin-top: 26px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(30, 64, 175, 0.7);
+      font-size: 0.78rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .info-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-shell {
+        padding-inline: 16px;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .info-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="bg-grid"></div>
-<div class="bg-glow"></div>
-<div class="page-shell">
-<header>
-<div class="brand">
-<div class="brand-mark"></div>
-<div class="brand-text">
-<div class="brand-name">HYPERPAIRS</div>
-<div class="brand-tagline">Hedged pair trading on Hyperliquid</div>
-</div>
-</div>
-</header>
-<main>
-<section class="hero" style="padding-bottom:0; grid-template-columns:1fr;">
-<div>
-<div class="hero-kicker">
-<span class="hero-kicker-pill">Built on Hyperliquid</span>
-Synthetic pair trading, simplified
-</div>
-<h1 class="hero-title" style="margin-bottom:12px;">
-Trade crypto as <span class="gradient">pairs, not coins.</span>
-</h1>
-<p class="hero-subtitle" style="margin-bottom:14px;">
-A lightweight, non‑custodial layer for pair trading on Hyperliquid — reducing liquidation risk
-and making hedged positions simple.
-</p>
-<div class="hero-bullets" style="
-margin-bottom:20px;
-padding:16px 18px;
-border-radius:14px;
-background:rgba(15,23,42,0.78);
-border:1px solid rgba(148,163,184,0.28);
-backdrop-filter:blur(14px);
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:18px;
-">
-<ul style="list-style:none; margin:0; padding:0;">
-<li><span class="dash">•</span><span><strong>What</strong> — A thin, non‑custodial
-layer for pair trading on Hyperliquid.</span></li>
-<li><span class="dash">•</span><span><strong>Why</strong> — Reduce USD‑liquidation
-risk & simplify hedged positions.</span></li>
-<li><span class="dash">•</span><span><strong>Who</strong> — Traders who want clean,
-ratio‑driven positions.</span></li>
-</ul>
-<ul style="list-style:none; margin:0; padding:0;">
-<li><span class="dash">•</span><span>Trade ETH/BTC, SOL/ETH & more as one
-unit.</span></li>
-<li><span class="dash">•</span><span>Engine auto‑manages ratios &
-rebalancing.</span></li>
-<li><span class="dash">•</span><span>No custody, no new infra — fully Hyperliquid
-native.</span></li>
-</ul>
-</div>
-<div class="hero-cta-row" style="margin-bottom:14px;">
-<a href="#" class="primary-cta"><span class="dot"></span> Join early access</a>
-<a href="#social" class="secondary-cta">Follow updates →</a>
-</div>
-<section id="social" style="margin-top:10px;">
-<div class="social-row">
-<a class="social-pill" href="#">Twitter / X</a>
-<a class="social-pill" href="#">Telegram</a>
-<a class="social-pill" href="#">Discord</a>
-<a class="social-pill" href="#">Email</a>
-</div>
-</section>
-</div>
-</section>
-</main>
-<footer>
-<span>© HyperPairs. Hedged pair trading on Hyperliquid.</span>
-<span>Built for on‑chain traders everywhere.</span>
-</footer>
-</div>
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <div class="page-shell">
+    <header>
+      <div class="brand">
+        <div class="logo-icon"></div>
+        <div class="brand-text">
+          <div class="brand-name">HYPERPAIRS</div>
+          <div class="brand-tagline">Hedged relative-value trading on Hyperliquid</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="hero">
+      <div class="hero-kicker">
+        <span class="hero-kicker-pill">Built on Hyperliquid</span>
+        Multi-leg hedged strategies, one interface
+      </div>
+
+      <h1 class="hero-title">
+        Trade <span class="gradient">relative value</span>, not isolated USD positions.
+      </h1>
+
+      <p class="hero-subtitle">
+        A lightweight, non-custodial layer that builds <strong>multi-asset hedged positions</strong> on Hyperliquid
+        by executing and maintaining the required legs automatically.
+      </p>
+
+      <section class="info-box" aria-label="What, Why, How, Who">
+        <div class="info-grid">
+          <div class="info-col">
+            <h3>What</h3>
+            <p>
+              We help traders build hedged or relative-value structures by executing the
+              required perp legs on Hyperliquid, bundled into one clean view.
+            </p>
+          </div>
+          <div class="info-col">
+            <h3>Why</h3>
+            <p>
+              Pure USD exposure amplifies liquidation risk. Correlated legs smooth PnL
+              and reduce blow-ups from one-directional moves.
+            </p>
+          </div>
+          <div class="info-col">
+            <h3>How</h3>
+            <p>
+              You choose assets and ratios. HyperPairs places and maintains the individual
+              USDC-margined perp positions with correct weights and rebalancing.
+            </p>
+          </div>
+          <div class="info-col">
+            <h3>Who</h3>
+            <p>
+              Traders expressing ETH vs BTC, SOL vs ETH, sector spreads, beta hedges, or
+              custom multi-asset views without manual multi-leg management.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <ul class="hero-bullets">
+        <li>Multi-leg relative-value strategies built on Hyperliquid.</li>
+        <li>Correlation & hedge tools to find positive, negative, or low-correlation combos.</li>
+        <li>Auto-rebalancing & ratio management if legs drift.</li>
+        <li>Executes as separate Hyperliquid perp positions — HyperPairs is just the layer on top.</li>
+      </ul>
+
+      <div class="hero-cta-row">
+        <!-- TODO: replace # with your early-access link -->
+        <a href="#" class="btn-primary">
+          <span class="dot"></span>
+          Join early access
+        </a>
+        <!-- TODO: replace # with your updates / newsletter / Twitter link -->
+        <a href="#" class="btn-secondary">
+          Follow updates
+        </a>
+      </div>
+
+      <p class="hero-caption">
+        HyperPairs never holds custody. All positions live directly in your Hyperliquid account.
+      </p>
+
+      <div class="social-row">
+        <!-- TODO: replace # with real social links -->
+        <a class="social-pill" href="#">Twitter / X</a>
+        <a class="social-pill" href="#">Telegram</a>
+        <a class="social-pill" href="#">Discord</a>
+        <a class="social-pill" href="#">Email</a>
+      </div>
+    </main>
+
+    <footer>
+      <span>© HyperPairs. Hedged relative-value trading on Hyperliquid.</span>
+      <span>Built for on-chain traders everywhere.</span>
+    </footer>
+  </div>
 </body>
 </html>
