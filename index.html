@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta property="og:image" content="https://hyperpairs.com/logo.png">
-  <title>HyperPairs – Hedged Relative-Value Trading on Hyperliquid</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta property="og:image" content="https://hyperpairs.com/logo.png">
+<title>Hyperpairs — Hedged Futures Trading Made Simple</title>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-514TBHTZJ0"></script>
 <script>
@@ -14,427 +14,1104 @@
 
   gtag('config', 'G-514TBHTZJ0');
 </script>
+
+  <!-- Font (swap if you want) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    :root {
-      --bg: #020617;
-      --bg-soft: #020817;
-      --accent: #22d3ee;
-      --accent-strong: #38bdf8;
-      --accent-purple: #6366f1;
-      --text-main: #e5e7eb;
-      --text-muted: #9ca3af;
-      --border-subtle: rgba(148, 163, 184, 0.35);
-      --btn-primary: #2563eb;
-      --btn-primary-hover: #1d4ed8;
+    :root{
+      --bg0:#050818;
+      --bg1:#070b1f;
+      --ink:#eaf0ff;
+      --muted: rgba(234,240,255,.72);
+      --muted2: rgba(234,240,255,.55);
+      --stroke: rgba(255,255,255,.10);
+      --stroke2: rgba(255,255,255,.14);
+      --card: rgba(12,18,44,.58);
+      --card2: rgba(15,22,52,.42);
+      --shadow: 0 26px 80px rgba(0,0,0,.45);
+      --shadow2: 0 14px 46px rgba(0,0,0,.38);
+      --accent:#6aa8ff;
+      --accent2:#8b63ff;
+      --good:#39e58a;
+      --radius: 18px;
+      --max: 1100px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 520px at 50% 0%, rgba(126,116,255,.32), transparent 60%),
+        radial-gradient(900px 420px at 82% 18%, rgba(106,168,255,.22), transparent 62%),
+        radial-gradient(900px 420px at 18% 18%, rgba(139,99,255,.20), transparent 62%),
+        radial-gradient(1200px 800px at 50% 62%, rgba(94,150,255,.08), transparent 70%),
+        linear-gradient(180deg, #06081a 0%, #070a1f 30%, #050717 100%);
+      overflow-x:hidden;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    .container{ width:min(var(--max), calc(100% - 56px)); margin:0 auto; }
+
+    /* Soft “aurora / wave” ribbons behind hero (similar to screenshot) */
+    .ribbons{
+      position:absolute; inset:-120px -260px auto -260px; height:520px;
+      pointer-events:none; filter: blur(0px);
+      opacity:1;
+    }
+    .ribbons:before,
+    .ribbons:after{
+      content:"";
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      width:1400px;
+      height:440px;
+      top:150px;
+      background:
+        radial-gradient(closest-side at 50% 50%, rgba(147,120,255,.55), transparent 68%),
+        radial-gradient(closest-side at 70% 40%, rgba(105,173,255,.35), transparent 62%),
+        radial-gradient(closest-side at 30% 40%, rgba(156,100,255,.28), transparent 62%);
+      mask: radial-gradient(closest-side, #000 50%, transparent 72%);
+      opacity:.85;
+      filter: blur(18px);
+    }
+    .ribbons:after{
+      top:210px;
+      width:1500px;
+      height:520px;
+      opacity:.55;
+      filter: blur(26px);
+      background:
+        radial-gradient(closest-side at 50% 40%, rgba(140,120,255,.45), transparent 68%),
+        radial-gradient(closest-side at 78% 45%, rgba(102,190,255,.24), transparent 62%),
+        radial-gradient(closest-side at 22% 45%, rgba(176,90,255,.22), transparent 62%);
+    }
+
+    /* Subtle star/noise */
+    .noise{
+      position:fixed; inset:0; pointer-events:none; opacity:.10; mix-blend-mode:overlay;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      background-size:180px 180px;
+    }
+
+    /* Top nav */
+    header{
+      position:relative;
+      padding:22px 0 0;
+      z-index:10;
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; min-width:260px;
+    }
+    .brand .logo{
+      width:28px; height:28px; display:grid; place-items:center;
+    }
+    .brand .name{
+      display:flex; align-items:baseline; gap:10px;
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+    .brand .tag{
+      font-size:12px;
+      color:rgba(234,240,255,.62);
+      font-weight:500;
+      letter-spacing:.2px;
+      white-space:nowrap;
+    }
+    nav{
+      display:flex; align-items:center; gap:22px;
+      font-weight:600;
+      color:rgba(234,240,255,.78);
+      font-size:14px;
+    }
+    nav a{ opacity:.9; }
+    nav a:hover{ opacity:1; color:#fff; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 18px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(110,150,255,.25), rgba(70,90,210,.14));
+      box-shadow: 0 10px 30px rgba(0,0,0,.22);
+      color:#eef3ff;
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+    .btn:hover{
+      border-color: rgba(255,255,255,.22);
+      background: linear-gradient(180deg, rgba(120,165,255,.28), rgba(72,92,220,.15));
+      transform: translateY(-1px);
+    }
+
+    /* Hero */
+    .hero{
+      position:relative;
+      padding:72px 0 10px;
+      z-index:5;
+    }
+    .hero-inner{
+      display:flex; flex-direction:column; align-items:center; text-align:center;
+      gap:14px;
+    }
+    .hero h1{
+      margin:0;
+      font-size: clamp(34px, 4.2vw, 52px);
+      font-weight:800;
+      letter-spacing:-.7px;
+      text-shadow: 0 14px 60px rgba(0,0,0,.55);
+    }
+    .hero p{
+      margin:0;
+      max-width:760px;
+      color: rgba(234,240,255,.72);
+      font-size: 15.5px;
+      line-height:1.6;
+    }
+
+    /* Laptop mock */
+    .stage{
+      width:min(900px, 100%);
+      margin:34px auto 0;
+      position:relative;
+      padding-bottom:42px;
+    }
+    .glow{
+      position:absolute; inset:auto 0 8px 0; height:240px;
+      background:
+        radial-gradient(closest-side at 50% 60%, rgba(110,170,255,.18), transparent 70%),
+        radial-gradient(closest-side at 50% 50%, rgba(155,95,255,.14), transparent 72%);
+      filter: blur(12px);
+      pointer-events:none;
+    }
+
+    .laptop{
+      position:relative;
+      width:min(820px, 100%);
+      margin:0 auto;
+      transform: translateY(0);
+    }
+    .screen{
+      position:relative;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(28,38,86,.55), rgba(12,16,48,.66));
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      aspect-ratio: 16 / 9;
+    }
+    .screen:before{
+      content:"";
+      position:absolute; inset:-40% -30% auto -30%;
+      height:80%;
+      background:
+        radial-gradient(closest-side at 50% 50%, rgba(130,160,255,.22), transparent 70%),
+        radial-gradient(closest-side at 70% 30%, rgba(160,100,255,.20), transparent 65%),
+        radial-gradient(closest-side at 30% 30%, rgba(90,185,255,.14), transparent 65%);
+      filter: blur(18px);
+      opacity:.9;
+    }
+    .screen:after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(255,255,255,.10), transparent 18%);
+      opacity:.5;
+      pointer-events:none;
+    }
+
+    /* Fake app UI inside screen (no external image needed) */
+    .ui{
+      position:absolute; inset:14px;
+      border-radius: 10px;
+      background: rgba(6,10,26,.82);
+      border: 1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.2) inset;
+    }
+    .ui-top{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 12px;
+      background: linear-gradient(180deg, rgba(16,22,54,.85), rgba(8,12,32,.65));
+      border-bottom:1px solid rgba(255,255,255,.08);
+      font-size:12px;
+      color:rgba(234,240,255,.72);
+    }
+    .ui-brand{ display:flex; align-items:center; gap:8px; font-weight:700; color:#eaf0ff; }
+    .ui-tabs{ display:flex; gap:14px; font-weight:600; color:rgba(234,240,255,.64); }
+    .ui-tabs span:nth-child(2){ color:rgba(234,240,255,.92); }
+    .ui-main{
+      display:grid;
+      grid-template-columns: 1.65fr 1fr;
+      gap:12px;
+      padding:12px;
+      height: calc(100% - 42px);
+    }
+    .panel{
+      border-radius:12px;
+      background: rgba(16,22,52,.45);
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+    }
+    .panel.h{
+      display:flex; flex-direction:column;
+    }
+    .panel-title{
+      padding:10px 12px;
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.2px;
+      color: rgba(234,240,255,.70);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background: rgba(10,14,36,.55);
+    }
+    .rows{ padding:10px 12px; display:flex; flex-direction:column; gap:10px; }
+    .row{
+      display:grid; grid-template-columns: 1fr 1fr 1fr;
+      gap:8px;
+      padding:10px;
+      border-radius:10px;
+      background: rgba(6,10,26,.62);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .pair{
+      font-size:12px; font-weight:800; letter-spacing:.2px;
+      color:#eef3ff;
+    }
+    .sub{
+      margin-top:2px;
+      font-size:10px;
+      color: rgba(234,240,255,.55);
+      font-weight:600;
+    }
+    .spark{
+      height:22px;
+      border-radius:8px;
+      background:
+        linear-gradient(90deg, rgba(60,230,140,.0), rgba(60,230,140,.35)),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      position:relative;
+      overflow:hidden;
+    }
+    .spark:before{
+      content:"";
+      position:absolute; left:-30%; top:0; bottom:0; width:60%;
+      background: linear-gradient(90deg, transparent, rgba(60,230,140,.65), transparent);
+      transform: skewX(-20deg);
+      opacity:.7;
+      animation: sweep 3.2s linear infinite;
+    }
+    @keyframes sweep{
+      0%{ transform: translateX(-60%) skewX(-20deg); opacity:.0 }
+      20%{ opacity:.75 }
+      100%{ transform: translateX(260%) skewX(-20deg); opacity:.0 }
+    }
+    .metric{
+      display:flex; flex-direction:column; gap:2px;
+      align-items:flex-start;
+      justify-content:center;
+    }
+    .metric .k{ font-size:10px; color:rgba(234,240,255,.52); font-weight:700; }
+    .metric .v{ font-size:12px; font-weight:800; }
+    .v.good{ color: rgba(60,229,138,.95); }
+    .v.neu{ color: rgba(234,240,255,.82); }
+
+    .side{
+      display:flex; flex-direction:column; gap:12px;
+    }
+    .side .panel{ height:100%; }
+    .side .panel .rows .row{
+      grid-template-columns:1fr;
+      gap:8px;
+    }
+    .note{
+      font-size:10px;
+      color: rgba(234,240,255,.62);
+      line-height:1.4;
+    }
+
+    .base{
+      width: 92%;
+      margin: -10px auto 0;
+      height: 34px;
+      border-radius: 0 0 26px 26px;
+      background: linear-gradient(180deg, rgba(34,44,96,.40), rgba(10,12,34,.65));
+      border: 1px solid rgba(255,255,255,.12);
+      border-top: none;
+      box-shadow: 0 26px 80px rgba(0,0,0,.35);
+      position:relative;
+      overflow:hidden;
+    }
+    .base:before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(closest-side at 50% 0%, rgba(255,255,255,.20), transparent 60%);
+      opacity:.35;
+    }
+
+    /* Mid cards */
+    .cards{
+      position:relative;
+      padding: 38px 0 0;
+      z-index:4;
+    }
+    .cards-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-top: 10px;
+    }
+    .card{
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(12,18,44,.56), rgba(10,14,36,.40));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: var(--shadow2);
+      padding: 22px 22px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position:relative;
+      overflow:hidden;
+    }
+    .card:before{
+      content:"";
+      position:absolute; inset:-60px -40px auto -40px; height:120px;
+      background:
+        radial-gradient(closest-side at 40% 60%, rgba(106,168,255,.22), transparent 70%),
+        radial-gradient(closest-side at 70% 50%, rgba(139,99,255,.16), transparent 70%);
+      filter: blur(12px);
+      opacity:.7;
+    }
+    .card h3{
+      margin:0 0 8px;
+      font-size:18px;
+      font-weight:800;
+      letter-spacing:-.2px;
+    }
+    .card p{
+      margin:0 0 12px;
+      color: rgba(234,240,255,.68);
+      font-size:13px;
+      line-height:1.5;
+      max-width: 520px;
+    }
+    .checklist{
+      display:flex; flex-direction:column; gap:10px;
+      margin: 14px 0 0;
+      padding:0;
+      list-style:none;
+      position:relative;
+      z-index:1;
+    }
+    .checklist li{
+      display:flex; gap:10px; align-items:flex-start;
+      font-size:13px;
+      color: rgba(234,240,255,.70);
+      line-height:1.45;
+      font-weight:600;
+    }
+    .check{
+      width:18px; height:18px; flex:0 0 18px;
+      display:grid; place-items:center;
+      margin-top:1px;
+      border-radius:999px;
+      background: rgba(57,229,138,.14);
+      border: 1px solid rgba(57,229,138,.45);
+      box-shadow: 0 10px 22px rgba(57,229,138,.10);
+    }
+    .check svg{ width:12px; height:12px; }
+
+    /* Icon row “hill” divider */
+    .hill-wrap{
+      position:relative;
+      margin-top: 34px;
+      padding-top: 22px;
+      z-index:3;
+    }
+    .hill{
+      position:absolute; left:50%; transform:translateX(-50%);
+      top: 0px;
+      width: min(1040px, 96vw);
+      height: 190px;
+      filter: drop-shadow(0 30px 70px rgba(0,0,0,.48));
+      opacity: .95;
+      pointer-events:none;
+    }
+    .icons{
+      position:relative;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      padding-top: 54px;
+      align-items:start;
+      text-align:left;
+    }
+    .icon-card{
+      padding: 12px 10px 0;
+    }
+    .icon-top{
+      height: 58px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom: 10px;
+    }
+    .icon-badge{
+      width: 62px; height: 62px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(18,26,62,.60), rgba(10,14,36,.35));
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 18px 48px rgba(0,0,0,.35);
+      position:relative;
+      display:grid; place-items:center;
+    }
+    .icon-badge:before{
+      content:"";
+      position:absolute; inset:-20px -20px auto -20px; height:54px;
+      background:
+        radial-gradient(closest-side at 40% 60%, rgba(106,168,255,.22), transparent 70%),
+        radial-gradient(closest-side at 70% 60%, rgba(139,99,255,.20), transparent 70%);
+      filter: blur(14px);
+      opacity:.8;
+    }
+
+    .icon-card h4{
+      margin: 0 0 8px;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: -.1px;
+    }
+    .icon-card ul{
+      margin: 10px 0 0;
       padding: 0;
-    }
-
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        sans-serif;
-      background:
-        radial-gradient(circle at top, #0b1120 0, #020617 45%, #020617 100%);
-      color: var(--text-main);
-      min-height: 100vh;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .bg-grid {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.16;
-      background-image:
-        linear-gradient(to right, rgba(15, 23, 42, 0.7) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(15, 23, 42, 0.7) 1px, transparent 1px);
-      background-size: 90px 90px;
-      mask-image: radial-gradient(circle at top, black 0, black 40%, transparent 70%);
-      z-index: -2;
-    }
-
-    .bg-glow {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 15% 0%, rgba(56, 189, 248, 0.28), transparent 55%),
-        radial-gradient(circle at 80% 10%, rgba(99, 102, 241, 0.24), transparent 55%);
-      opacity: 0.9;
-      z-index: -3;
-    }
-
-    .page-shell {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 24px 20px 40px;
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding-bottom: 24px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
+      list-style:none;
+      display:flex;
+      flex-direction:column;
       gap: 10px;
     }
-
-    .logo-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      background:
-        radial-gradient(circle at 30% 20%, #e0f2fe, transparent 55%),
-        conic-gradient(from 210deg, #22d3ee, #38bdf8, #6366f1, #22d3ee);
-      position: relative;
-      box-shadow: 0 0 18px rgba(56, 189, 248, 0.8);
+    .icon-card li{
+      display:flex; gap:10px; align-items:flex-start;
+      color: rgba(234,240,255,.68);
+      font-size: 12.8px;
+      font-weight:600;
+      line-height:1.45;
     }
 
-    .logo-icon::before {
-      content: "";
-      position: absolute;
-      inset: 18%;
-      border-radius: inherit;
-      background: radial-gradient(circle at 60% 40%, #0f172a, #020617);
-      box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.95);
+    /* CTA */
+    .cta{
+      padding: 52px 0 18px;
+      text-align:center;
+      position:relative;
+      z-index:2;
+    }
+    .cta h2{
+      margin: 0 0 10px;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -.4px;
+    }
+    .cta p{
+      margin:0 auto 18px;
+      max-width: 680px;
+      color: rgba(234,240,255,.66);
+      font-size: 13.6px;
+      line-height: 1.55;
+    }
+    .cta .btn{
+      padding: 12px 26px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(110,150,255,.28), rgba(70,90,210,.14));
+      border:1px solid rgba(255,255,255,.15);
     }
 
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
+    footer{
+      padding: 16px 0 36px;
+      text-align:center;
+      color: rgba(234,240,255,.55);
+      font-size: 12px;
+    }
+    .footlinks{
+      display:flex; gap: 22px;
+      justify-content:center; align-items:center;
+      padding: 8px 0 10px;
+      color: rgba(234,240,255,.60);
+      font-weight:600;
+    }
+    .fineprint{
+      font-size: 10px;
+      opacity:.55;
+      max-width: 900px;
+      margin: 6px auto 0;
+      line-height:1.5;
     }
 
-    .brand-name {
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 0.92rem;
+    /* Responsiveness */
+    @media (max-width: 900px){
+      .brand{ min-width:auto; }
+      .brand .tag{ display:none; }
+      .ui-main{ grid-template-columns: 1fr; }
+      .cards-grid{ grid-template-columns: 1fr; }
+      .icons{ grid-template-columns: 1fr; padding-top: 64px; }
+      .hill{ height: 230px; }
+      nav{ gap:14px; }
+    }
+    @media (max-width: 520px){
+      nav a:not(.btn){ display:none; }
+      .hero{ padding-top: 56px; }
+      .container{ width: calc(100% - 34px); }
+      .screen{ border-radius:12px; }
+      .ui{ inset:10px; }
     }
 
-    .brand-tagline {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
+/* ------------------------------
+   MOBILE + OVERFLOW FIX PATCH
+   Put this at END of <style>
+-------------------------------- */
 
-    .hero {
-      padding-top: 12px;
-      padding-bottom: 24px;
-    }
+/* 1) Kill horizontal scroll for good (safe for this design) */
+html, body { overflow-x: clip; }
+@supports not (overflow-x: clip) {
+  html, body { overflow-x: hidden; }
+}
 
-    .hero-kicker {
-      font-size: 0.78rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      color: var(--text-muted);
-      margin-bottom: 12px;
-      backdrop-filter: blur(16px);
-    }
+/* 2) Ensure absolutely-positioned decor never participates in layout overflow */
+.ribbons,
+.hill,
+.glow,
+.noise {
+  max-width: 100%;
+  pointer-events: none;
+}
 
-    .hero-kicker-pill {
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      background: rgba(56, 189, 248, 0.15);
-      color: var(--accent-strong);
-      border: 1px solid rgba(56, 189, 248, 0.7);
-    }
+/* 3) Ribbons: stop them from being "wider than screen" on mobile */
+.ribbons{
+  left: 50%;
+  right: auto;
+  width: 140vw;              /* was huge negative inset; use vw sizing instead */
+  max-width: 1400px;
+  transform: translateX(-50%);
+  inset: -120px auto auto auto;
+}
 
-    .hero-title {
-      font-size: clamp(2.3rem, 3.4vw, 2.8rem);
-      line-height: 1.08;
-      letter-spacing: -0.04em;
-      margin-bottom: 14px;
-    }
+/* Reduce ribbon intensity/height on mobile to avoid messy look */
+@media (max-width: 600px){
+  .ribbons{
+    width: 160vw;
+    height: 420px;
+    opacity: .75;
+  }
+  .ribbons:before{ filter: blur(20px); opacity: .7; }
+  .ribbons:after { filter: blur(28px); opacity: .45; }
+}
 
-    .hero-title span.gradient {
-      background: linear-gradient(to right, #e0f2fe, #38bdf8, #a855f7);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
+/* 4) Hero vertical spacing tighten */
+.hero { padding: 56px 0 8px; }            /* reduce top padding */
+@media (max-width: 520px){
+  .hero { padding-top: 44px; }
+  .hero p { font-size: 14px; line-height: 1.55; }
+}
 
-    .hero-subtitle {
-      font-size: 0.98rem;
-      color: var(--text-muted);
-      max-width: 36rem;
-      margin-bottom: 20px;
-    }
+/* 5) Laptop stage spacing + ensure nothing spills horizontally */
+.stage{
+  padding-bottom: 26px;                   /* was 42px */
+  margin-top: 22px;                       /* was 34px */
+  overflow: visible;
+}
+.laptop{ width: min(820px, 100%); }       /* keep it strictly inside */
 
-    .info-box {
-      margin-bottom: 22px;
-      padding: 18px 20px;
-      border-radius: 16px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid var(--border-subtle);
-      backdrop-filter: blur(18px);
-    }
+/* Screen/UI: shrink inset slightly on mobile */
+@media (max-width: 520px){
+  .screen{ border-radius: 12px; }
+  .ui{ inset: 8px; border-radius: 10px; }
+  .ui-main{ padding: 10px; gap: 10px; }
+}
 
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-      font-size: 0.82rem;
-    }
+/* 6) Hill SVG: make it responsive + avoid forcing width overflow */
+.hill-wrap{
+  overflow: hidden;                       /* important: clip the hill */
+}
+.hill{
+  width: 140%;
+  max-width: none;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-    .info-col h3 {
-      font-size: 0.86rem;
-      margin-bottom: 6px;
-    }
+/* Mobile: stack icon section neatly and reduce top padding */
+@media (max-width: 900px){
+  .hill{ width: 180%; height: 210px; opacity: .90; }
+  .icons{ padding-top: 38px; }
+}
+@media (max-width: 520px){
+  .hill{ width: 220%; height: 220px; opacity: .85; }
+  .icons{ padding-top: 28px; gap: 18px; }
+  .icon-top{ height: 52px; }
+  .icon-badge{ width: 58px; height: 58px; border-radius: 16px; }
+}
 
-    .info-col p {
-      color: var(--text-muted);
-    }
+/* 7) Cards spacing on mobile (less “empty air”) */
+@media (max-width: 900px){
+  .cards{ padding-top: 24px; }
+  .card{ padding: 18px; }
+  .cards-grid{ gap: 16px; }
+}
 
-    .hero-bullets {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 20px;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
+/* 8) Nav: prevent weird wrapping/spacing */
+nav { flex-wrap: nowrap; }
+@media (max-width: 520px){
+  header { padding-top: 14px; }
+  .brand .name { gap: 8px; }
+}
+@media (max-width: 520px){
+  .brand { min-width: 0 !important; }
+}
 
-    .hero-bullets li {
-      list-style: none;
-      position: relative;
-      padding-left: 14px;
-    }
-
-    .hero-bullets li::before {
-      content: "•";
-      position: absolute;
-      left: 0;
-      top: -1px;
-      color: var(--accent-strong);
-    }
-
-    .hero-cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .btn-primary {
-      padding: 10px 18px;
-      border-radius: 999px;
-      border: none;
-      background: var(--btn-primary);
-      color: #f9fafb;
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      text-decoration: none;
-      box-shadow: 0 14px 35px rgba(37, 99, 235, 0.55);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-primary span.dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 10px rgba(34, 211, 238, 0.9);
-    }
-
-    .btn-primary:hover {
-      background: var(--btn-primary-hover);
-    }
-
-    .btn-secondary {
-      padding: 10px 18px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.8);
-      color: var(--text-main);
-      font-size: 0.9rem;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .hero-caption {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    .social-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-      font-size: 0.82rem;
-    }
-
-    .social-pill {
-      border-radius: 999px;
-      padding: 6px 12px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--text-muted);
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    footer {
-      margin-top: 26px;
-      padding-top: 14px;
-      border-top: 1px solid rgba(30, 64, 175, 0.7);
-      font-size: 0.78rem;
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      color: var(--text-muted);
-      flex-wrap: wrap;
-    }
-
-    @media (max-width: 900px) {
-      .info-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .page-shell {
-        padding-inline: 16px;
-      }
-
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .info-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .hero-title {
-        font-size: 2rem;
-      }
-    }
   </style>
 </head>
+
 <body>
-  <div class="bg-grid"></div>
-  <div class="bg-glow"></div>
+  <div class="noise"></div>
 
-  <div class="page-shell">
-    <header>
-      <div class="brand">
-        <div class="logo-icon"></div>
-        <div class="brand-text">
-          <div class="brand-name">HYPERPAIRS</div>
-          <div class="brand-tagline">Hedged relative-value trading on Hyperliquid</div>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#">
+        <div class="logo" aria-label="Logo">
+          <!-- Placeholder logo (swap with your SVG) -->
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2.2" y="2.2" width="23.6" height="23.6" rx="7" fill="rgba(106,168,255,.16)" stroke="rgba(106,168,255,.55)"/>
+            <path d="M9 18.2V9.8M19 18.2V9.8" stroke="rgba(234,240,255,.92)" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M9 14h10" stroke="rgba(57,229,138,.95)" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="name">
+          <span>Hyperpairs</span>
+          <span class="tag">Hedged Futures Trading Made Simple</span>
+        </div>
+      </a>
+
+      <nav>
+        <a href="#how">How It Works</a>
+        <!-- <a href="#security">Security</a> -->
+        <a class="btn" href="https://app.hyperpairs.com">Launch App</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="ribbons"></div>
+
+      <div class="container hero-inner">
+        <h1>Trade Perpetual Pairs, Hedge Smarter.</h1>
+        <p>
+          Leverage sophisticated math to trade futures pairs while<br />
+          minimizing liquidation risk.
+        </p>
+
+        <div class="stage" aria-label="Product preview">
+          <div class="glow"></div>
+
+          <div class="laptop">
+            <div class="screen">
+              <div class="ui">
+                <div class="ui-top">
+                  <div class="ui-brand">
+                    <span style="display:inline-flex; gap:6px; align-items:center;">
+                      <span style="width:16px;height:16px;border-radius:5px;background:rgba(106,168,255,.24);border:1px solid rgba(106,168,255,.5);display:inline-block;"></span>
+                      Hyperpairs
+                    </span>
+                  </div>
+                  <div class="ui-tabs">
+                    <span>Trade Shares</span>
+                    <span>Pairs</span>
+                    <span>Wins</span>
+                  </div>
+                  <div style="display:flex; gap:10px; align-items:center;">
+                    <span style="opacity:.7">Force Connect</span>
+                    <span style="width:24px;height:14px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.12);position:relative;">
+                      <span style="position:absolute;left:2px;top:2px;width:10px;height:10px;border-radius:999px;background:rgba(106,168,255,.85);"></span>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="ui-main">
+                  <div class="panel h">
+                    <div class="panel-title">Pairs • Mean Reversion • Volatility • Delta Convergence</div>
+                    <div class="rows">
+                      <div class="row">
+                        <div>
+                          <div class="pair">SOL-PERP</div>
+                          <div class="sub">ETH-PERP</div>
+                        </div>
+                        <div class="spark" aria-hidden="true"></div>
+                        <div class="metric">
+                          <div class="k">Score</div>
+                          <div class="v good">+0.84</div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div>
+                          <div class="pair">BTC-PERP</div>
+                          <div class="sub">ETH-PERP</div>
+                        </div>
+                        <div class="spark" aria-hidden="true"></div>
+                        <div class="metric">
+                          <div class="k">Score</div>
+                          <div class="v good">+0.61</div>
+                        </div>
+                      </div>
+
+                      <div class="row" style="grid-template-columns:1.4fr .8fr .8fr;">
+                        <div>
+                          <div class="pair">ADA-PERP <span style="color:rgba(234,240,255,.55);font-weight:700;">vs</span> ETH-PERP</div>
+                          <div class="sub">Spread / Regression / Z-score</div>
+                        </div>
+                        <div class="metric">
+                          <div class="k">Z</div>
+                          <div class="v neu">1.72</div>
+                        </div>
+                        <div class="metric">
+                          <div class="k">Funding</div>
+                          <div class="v good">-0.004%</div>
+                        </div>
+                      </div>
+
+                      <div class="row" style="grid-template-columns:1.4fr .8fr .8fr;">
+                        <div>
+                          <div class="pair">ARB-PERP <span style="color:rgba(234,240,255,.55);font-weight:700;">vs</span> SOL-PERP</div>
+                          <div class="sub">Coin Support / Liquidity</div>
+                        </div>
+                        <div class="metric">
+                          <div class="k">Edge</div>
+                          <div class="v good">0.19</div>
+                        </div>
+                        <div class="metric">
+                          <div class="k">Risk</div>
+                          <div class="v neu">Low</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="side">
+                    <div class="panel">
+                      <div class="panel-title">Dashboard Earned</div>
+                      <div class="rows">
+                        <div class="row">
+                          <div class="note">
+                            <b style="color:rgba(234,240,255,.9)">Connection</b> • Ready<br/>
+                            <span style="opacity:.8">Slippage / spread warnings, funding, unlocks</span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="note">
+                            <b style="color:rgba(234,240,255,.9)">Setup</b> • Auto-sizing<br/>
+                            <span style="opacity:.8">Long one perp, short another — pair hedging 24/7</span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="note">
+                            <b style="color:rgba(234,240,255,.9)">Controls</b> • Guardrails<br/>
+                            <span style="opacity:.8">Stop logic, liquidation distance, position constraints</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="panel">
+                      <div class="panel-title">Recent Signals</div>
+                      <div class="rows">
+                        <div class="row">
+                          <div class="note">
+                            <b style="color:rgba(60,229,138,.95)">▲</b> SOL/ETH • Convergence<br/>
+                            <span style="opacity:.8">You’re within entry band</span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="note">
+                            <b style="color:rgba(60,229,138,.95)">▲</b> BTC/ETH • Mean Reversion<br/>
+                            <span style="opacity:.8">Funding improving, spread widening</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- ui-main -->
+              </div><!-- ui -->
+            </div><!-- screen -->
+
+            <div class="base"></div>
+          </div><!-- laptop -->
+        </div><!-- stage -->
+      </div><!-- hero-inner -->
+    </section>
+
+    <section class="cards container" id="how">
+      <div class="cards-grid">
+        <div class="card">
+          <h3>Hedge Perps without Guessing</h3>
+          <p>Get a curated dashboard of possible pair trades in seconds.</p>
+          <ul class="checklist">
+            <li>
+              <span class="check">
+                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              See which pairs are primed to trade
+            </li>
+            <li>
+              <span class="check">
+                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              Act or pass based on the math
+            </li>
+            <li>
+              <span class="check">
+                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              Stay active without chasing signals
+            </li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Real, Quantitative Signals</h3>
+          <p>Pair trading on mean reversion, volatility spreads, and delta convergence.</p>
+          <ul class="checklist">
+            <li>
+              <span class="check">
+                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              Option expirations, token unlocks, prediction markets, and funding captured in real-time.
+            </li>
+            <li>
+              <span class="check">
+                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              Statistical relationships surfaced, not guesses
+            </li>
+          </ul>
         </div>
       </div>
-    </header>
 
-    <main class="hero">
-      <div class="hero-kicker">
-        <span class="hero-kicker-pill">Built on Hyperliquid</span>
-        Multi-leg hedged strategies, one interface
-      </div>
+      <div class="hill-wrap">
+        <!-- Wavy hill base behind icons (SVG) -->
+        <svg class="hill" viewBox="0 0 1200 260" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="rgba(255,255,255,.08)"/>
+              <stop offset="1" stop-color="rgba(255,255,255,0)"/>
+            </linearGradient>
+            <radialGradient id="rg" cx="50%" cy="35%" r="70%">
+              <stop offset="0" stop-color="rgba(106,168,255,.18)"/>
+              <stop offset="50%" stop-color="rgba(139,99,255,.12)"/>
+              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+            </radialGradient>
+          </defs>
+          <path d="M0,170 C170,120 260,180 410,150 C540,124 650,90 790,130 C930,170 1010,115 1200,160 L1200,260 L0,260 Z"
+                fill="rgba(10,14,36,.68)" stroke="rgba(255,255,255,.10)" />
+          <path d="M0,170 C170,120 260,180 410,150 C540,124 650,90 790,130 C930,170 1010,115 1200,160"
+                fill="none" stroke="rgba(255,255,255,.10)" />
+          <ellipse cx="600" cy="145" rx="520" ry="170" fill="url(#rg)" opacity=".85"/>
+          <path d="M0,192 C220,145 300,220 470,185 C620,152 720,140 860,172 C990,202 1070,160 1200,188"
+                fill="none" stroke="url(#g1)" stroke-width="3" opacity=".85"/>
+        </svg>
 
-      <h1 class="hero-title">
-        Trade <span class="gradient">relative value</span>, not isolated USD positions.
-      </h1>
-
-      <p class="hero-subtitle">
-        A lightweight, non-custodial layer that builds <strong>multi-asset hedged positions</strong> on Hyperliquid
-        by executing and maintaining the required legs automatically.
-      </p>
-
-      <section class="info-box" aria-label="What, Why, How, Who">
-        <div class="info-grid">
-          <div class="info-col">
-            <h3>What</h3>
-            <p>
-              We help traders build hedged or relative-value structures by executing the
-              required perp legs on Hyperliquid, bundled into one clean view.
-            </p>
+        <div class="icons">
+          <!-- Icon 1 -->
+          <div class="icon-card">
+            <div class="icon-top">
+              <div class="icon-badge" aria-hidden="true">
+                <!-- Paper / list icon -->
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 3h7l3 3v15a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"
+                        stroke="rgba(234,240,255,.86)" stroke-width="1.6"/>
+                  <path d="M14 3v4a2 2 0 0 0 2 2h4"
+                        stroke="rgba(234,240,255,.62)" stroke-width="1.6"/>
+                  <path d="M8 12h8M8 16h8" stroke="rgba(57,229,138,.95)" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M8 9h4" stroke="rgba(234,240,255,.65)" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+            <h4>Pair based information</h4>
+            <ul>
+              <li>
+                <span class="check">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Get a curated dashboard of possible pair trades in seconds.
+              </li>
+              <li>
+                <span class="check">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                See which pairs are primed to <span style="color:rgba(57,229,138,.95)">trade</span>
+              </li>
+              <li>
+                <span class="check">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Act or pass based on the math
+              </li>
+              <li>
+                <span class="check">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Stay active without chasing signals
+              </li>
+            </ul>
           </div>
-          <div class="info-col">
-            <h3>Why</h3>
-            <p>
-              Pure USD exposure amplifies liquidation risk. Correlated legs smooth PnL
-              and reduce blow-ups from one-directional moves.
-            </p>
+
+          <!-- Icon 2 -->
+          <div class="icon-card">
+            <div class="icon-top">
+              <div class="icon-badge" aria-hidden="true">
+                <!-- Swirl arrows icon -->
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 8a7 7 0 0 1 12 2" stroke="rgba(234,240,255,.78)" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M19 10V6l-3 2.6" stroke="rgba(106,168,255,.95)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M17 16a7 7 0 0 1-12-2" stroke="rgba(234,240,255,.72)" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M5 14v4l3-2.6" stroke="rgba(57,229,138,.95)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="12" cy="12" r="2.2" fill="rgba(139,99,255,.35)" stroke="rgba(139,99,255,.75)"/>
+                </svg>
+              </div>
+            </div>
+            <h4>Real, Quantitative Signals</h4>
+            <ul>
+              <li>
+                <span class="check">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Pair trading on mean reversion, volatility spreads, and delta convergence.
+              </li>
+              <li>
+                <span class="check">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Option expirations, token unlocks, prediction markets, and funding captured in real-time.
+              </li>
+            </ul>
           </div>
-          <div class="info-col">
-            <h3>How</h3>
-            <p>
-              You choose assets and ratios. HyperPairs places and maintains the individual
-              USDC-margined perp positions with correct weights and rebalancing.
-            </p>
+
+          <!-- Icon 3 -->
+          <div class="icon-card" id="security">
+            <div class="icon-top">
+              <div class="icon-badge" aria-hidden="true">
+                <!-- Shield icon -->
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 3l8 4v6c0 5-3.4 8.8-8 9.9C7.4 21.8 4 18 4 13V7l8-4Z"
+                        stroke="rgba(234,240,255,.84)" stroke-width="1.6" />
+                  <path d="M9.2 12.3l2 2 3.8-4.2" stroke="rgba(57,229,138,.95)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            <h4>Reduce Liquidation Risk</h4>
+            <ul>
+              <li>
+                <span class="check">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Trade futures with structure and risk controls.
+              </li>
+              <li>
+                <span class="check">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Long one perp, short another — pair trading 24/7
+              </li>
+              <li>
+                <span class="check">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Trade with leverage while hedging
+              </li>
+              <li>
+                <span class="check">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Stay active and less exposed to big swings
+              </li>
+            </ul>
           </div>
-          <div class="info-col">
-            <h3>Who</h3>
-            <p>
-              Traders expressing ETH vs BTC, SOL vs ETH, sector spreads, beta hedges, or
-              custom multi-asset views without manual multi-leg management.
-            </p>
-          </div>
-        </div>
-      </section>
+        </div><!-- icons -->
+      </div><!-- hill-wrap -->
+    </section>
 
-      <ul class="hero-bullets">
-        <li>Multi-leg relative-value strategies built on Hyperliquid.</li>
-        <li>Correlation & hedge tools to find positive, negative, or low-correlation combos.</li>
-        <li>Auto-rebalancing & ratio management if legs drift.</li>
-        <li>Executes as separate Hyperliquid perp positions — HyperPairs is just the layer on top.</li>
-      </ul>
+    <section class="cta container" id="launch">
+      <h2>Ready to Hedge Perp Pairs?</h2>
+      <p>Say goodbye to FOMO and liquidation roulette. Start trading perpetual pairs with math-driven setups.</p>
+      <a class="btn" href="https://app.hyperpairs.com">Launch App</a>
+    </section>
+  </main>
 
-      <div class="hero-cta-row">
-        <a href="https://app.hyperpairs.com" target="_blank" class="btn-primary">
-          <span class="dot"></span>
-          Join early access
-        </a>
-        <!-- TODO: replace # with your updates / newsletter / Twitter link -->
-        <a href="#" class="btn-secondary">
-          Follow updates
-        </a>
-      </div>
+  <footer class="container">
+    <div class="footlinks">
+      <a href="#how">How It Works</a>
+      <a href="#security">Security</a>
+      <a href="#">Twitter</a>
+    </div>
+    <div class="fineprint">
+      Futures trading, the total termination is in the best associated to you volatile, for our help you did omissions &amp; our liquidation of forms cometh.
+    </div>
+    </br>
+   <div class="footer">
+    Hyperpairs © 2026 — Pair-Based Futures Trading
+   </div> 
+  </footer>
 
-      <p class="hero-caption">
-        HyperPairs never holds custody. All positions live directly in your Hyperliquid account.
-      </p>
-
-      <div class="social-row">
-        <!-- TODO: replace # with real social links -->
-        <a class="social-pill" href="#">Twitter / X</a>
-        <a class="social-pill" href="#">Telegram</a>
-        <a class="social-pill" href="#">Discord</a>
-        <a class="social-pill" href="#">Email</a>
-      </div>
-    </main>
-
-    <footer>
-      <span>© HyperPairs. Hedged relative-value trading on Hyperliquid.</span>
-      <span>Built for on-chain traders everywhere.</span>
-    </footer>
-  </div>
+  <script>
+    // Optional: smooth anchor scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        if(!id || id === '#') return;
+        const el = document.querySelector(id);
+        if(!el) return;
+        e.preventDefault();
+        el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+  </script>
 </body>
 </html>
