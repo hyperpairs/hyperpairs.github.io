@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:image" content="https://hyperpairs.com/logo.png">
 <title>Hyperpairs — Hedged Futures Trading Made Simple</title>
 <!-- Google tag (gtag.js) -->
@@ -15,1103 +15,1168 @@
   gtag('config', 'G-514TBHTZJ0');
 </script>
 
-  <!-- Font (swap if you want) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --bg0:#050818;
-      --bg1:#070b1f;
-      --ink:#eaf0ff;
-      --muted: rgba(234,240,255,.72);
-      --muted2: rgba(234,240,255,.55);
-      --stroke: rgba(255,255,255,.10);
-      --stroke2: rgba(255,255,255,.14);
-      --card: rgba(12,18,44,.58);
-      --card2: rgba(15,22,52,.42);
-      --shadow: 0 26px 80px rgba(0,0,0,.45);
-      --shadow2: 0 14px 46px rgba(0,0,0,.38);
-      --accent:#6aa8ff;
-      --accent2:#8b63ff;
-      --good:#39e58a;
-      --radius: 18px;
-      --max: 1100px;
-    }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--ink);
-      background:
-        radial-gradient(1200px 520px at 50% 0%, rgba(126,116,255,.32), transparent 60%),
-        radial-gradient(900px 420px at 82% 18%, rgba(106,168,255,.22), transparent 62%),
-        radial-gradient(900px 420px at 18% 18%, rgba(139,99,255,.20), transparent 62%),
-        radial-gradient(1200px 800px at 50% 62%, rgba(94,150,255,.08), transparent 70%),
-        linear-gradient(180deg, #06081a 0%, #070a1f 30%, #050717 100%);
-      overflow-x:hidden;
-    }
-
-    a{ color:inherit; text-decoration:none; }
-    .container{ width:min(var(--max), calc(100% - 56px)); margin:0 auto; }
-
-    /* Soft “aurora / wave” ribbons behind hero (similar to screenshot) */
-    .ribbons{
-      position:absolute; inset:-120px -260px auto -260px; height:520px;
-      pointer-events:none; filter: blur(0px);
-      opacity:1;
-    }
-    .ribbons:before,
-    .ribbons:after{
-      content:"";
-      position:absolute;
-      left:50%;
-      transform:translateX(-50%);
-      width:1400px;
-      height:440px;
-      top:150px;
-      background:
-        radial-gradient(closest-side at 50% 50%, rgba(147,120,255,.55), transparent 68%),
-        radial-gradient(closest-side at 70% 40%, rgba(105,173,255,.35), transparent 62%),
-        radial-gradient(closest-side at 30% 40%, rgba(156,100,255,.28), transparent 62%);
-      mask: radial-gradient(closest-side, #000 50%, transparent 72%);
-      opacity:.85;
-      filter: blur(18px);
-    }
-    .ribbons:after{
-      top:210px;
-      width:1500px;
-      height:520px;
-      opacity:.55;
-      filter: blur(26px);
-      background:
-        radial-gradient(closest-side at 50% 40%, rgba(140,120,255,.45), transparent 68%),
-        radial-gradient(closest-side at 78% 45%, rgba(102,190,255,.24), transparent 62%),
-        radial-gradient(closest-side at 22% 45%, rgba(176,90,255,.22), transparent 62%);
-    }
-
-    /* Subtle star/noise */
-    .noise{
-      position:fixed; inset:0; pointer-events:none; opacity:.10; mix-blend-mode:overlay;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
-      background-size:180px 180px;
-    }
-
-    /* Top nav */
-    header{
-      position:relative;
-      padding:22px 0 0;
-      z-index:10;
-    }
-    .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:16px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px; min-width:260px;
-    }
-    .brand .logo{
-      width:28px; height:28px; display:grid; place-items:center;
-    }
-    .brand .name{
-      display:flex; align-items:baseline; gap:10px;
-      font-weight:700;
-      letter-spacing:.2px;
-    }
-    .brand .tag{
-      font-size:12px;
-      color:rgba(234,240,255,.62);
-      font-weight:500;
-      letter-spacing:.2px;
-      white-space:nowrap;
-    }
-    nav{
-      display:flex; align-items:center; gap:22px;
-      font-weight:600;
-      color:rgba(234,240,255,.78);
-      font-size:14px;
-    }
-    nav a{ opacity:.9; }
-    nav a:hover{ opacity:1; color:#fff; }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:10px 18px;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,.14);
-      background: linear-gradient(180deg, rgba(110,150,255,.25), rgba(70,90,210,.14));
-      box-shadow: 0 10px 30px rgba(0,0,0,.22);
-      color:#eef3ff;
-      font-weight:700;
-      letter-spacing:.2px;
-    }
-    .btn:hover{
-      border-color: rgba(255,255,255,.22);
-      background: linear-gradient(180deg, rgba(120,165,255,.28), rgba(72,92,220,.15));
-      transform: translateY(-1px);
-    }
-
-    /* Hero */
-    .hero{
-      position:relative;
-      padding:72px 0 10px;
-      z-index:5;
-    }
-    .hero-inner{
-      display:flex; flex-direction:column; align-items:center; text-align:center;
-      gap:14px;
-    }
-    .hero h1{
-      margin:0;
-      font-size: clamp(34px, 4.2vw, 52px);
-      font-weight:800;
-      letter-spacing:-.7px;
-      text-shadow: 0 14px 60px rgba(0,0,0,.55);
-    }
-    .hero p{
-      margin:0;
-      max-width:760px;
-      color: rgba(234,240,255,.72);
-      font-size: 15.5px;
-      line-height:1.6;
-    }
-
-    /* Laptop mock */
-    .stage{
-      width:min(900px, 100%);
-      margin:34px auto 0;
-      position:relative;
-      padding-bottom:42px;
-    }
-    .glow{
-      position:absolute; inset:auto 0 8px 0; height:240px;
-      background:
-        radial-gradient(closest-side at 50% 60%, rgba(110,170,255,.18), transparent 70%),
-        radial-gradient(closest-side at 50% 50%, rgba(155,95,255,.14), transparent 72%);
-      filter: blur(12px);
-      pointer-events:none;
-    }
-
-    .laptop{
-      position:relative;
-      width:min(820px, 100%);
-      margin:0 auto;
-      transform: translateY(0);
-    }
-    .screen{
-      position:relative;
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(28,38,86,.55), rgba(12,16,48,.66));
-      border: 1px solid rgba(255,255,255,.14);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      aspect-ratio: 16 / 9;
-    }
-    .screen:before{
-      content:"";
-      position:absolute; inset:-40% -30% auto -30%;
-      height:80%;
-      background:
-        radial-gradient(closest-side at 50% 50%, rgba(130,160,255,.22), transparent 70%),
-        radial-gradient(closest-side at 70% 30%, rgba(160,100,255,.20), transparent 65%),
-        radial-gradient(closest-side at 30% 30%, rgba(90,185,255,.14), transparent 65%);
-      filter: blur(18px);
-      opacity:.9;
-    }
-    .screen:after{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(255,255,255,.10), transparent 18%);
-      opacity:.5;
-      pointer-events:none;
-    }
-
-    /* Fake app UI inside screen (no external image needed) */
-    .ui{
-      position:absolute; inset:14px;
-      border-radius: 10px;
-      background: rgba(6,10,26,.82);
-      border: 1px solid rgba(255,255,255,.10);
-      overflow:hidden;
-      box-shadow: 0 0 0 1px rgba(0,0,0,.2) inset;
-    }
-    .ui-top{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:10px 12px;
-      background: linear-gradient(180deg, rgba(16,22,54,.85), rgba(8,12,32,.65));
-      border-bottom:1px solid rgba(255,255,255,.08);
-      font-size:12px;
-      color:rgba(234,240,255,.72);
-    }
-    .ui-brand{ display:flex; align-items:center; gap:8px; font-weight:700; color:#eaf0ff; }
-    .ui-tabs{ display:flex; gap:14px; font-weight:600; color:rgba(234,240,255,.64); }
-    .ui-tabs span:nth-child(2){ color:rgba(234,240,255,.92); }
-    .ui-main{
-      display:grid;
-      grid-template-columns: 1.65fr 1fr;
-      gap:12px;
-      padding:12px;
-      height: calc(100% - 42px);
-    }
-    .panel{
-      border-radius:12px;
-      background: rgba(16,22,52,.45);
-      border:1px solid rgba(255,255,255,.10);
-      overflow:hidden;
-    }
-    .panel.h{
-      display:flex; flex-direction:column;
-    }
-    .panel-title{
-      padding:10px 12px;
-      font-size:11px;
-      font-weight:700;
-      letter-spacing:.2px;
-      color: rgba(234,240,255,.70);
-      border-bottom:1px solid rgba(255,255,255,.08);
-      background: rgba(10,14,36,.55);
-    }
-    .rows{ padding:10px 12px; display:flex; flex-direction:column; gap:10px; }
-    .row{
-      display:grid; grid-template-columns: 1fr 1fr 1fr;
-      gap:8px;
-      padding:10px;
-      border-radius:10px;
-      background: rgba(6,10,26,.62);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-    .pair{
-      font-size:12px; font-weight:800; letter-spacing:.2px;
-      color:#eef3ff;
-    }
-    .sub{
-      margin-top:2px;
-      font-size:10px;
-      color: rgba(234,240,255,.55);
-      font-weight:600;
-    }
-    .spark{
-      height:22px;
-      border-radius:8px;
-      background:
-        linear-gradient(90deg, rgba(60,230,140,.0), rgba(60,230,140,.35)),
-        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-      border:1px solid rgba(255,255,255,.08);
-      position:relative;
-      overflow:hidden;
-    }
-    .spark:before{
-      content:"";
-      position:absolute; left:-30%; top:0; bottom:0; width:60%;
-      background: linear-gradient(90deg, transparent, rgba(60,230,140,.65), transparent);
-      transform: skewX(-20deg);
-      opacity:.7;
-      animation: sweep 3.2s linear infinite;
-    }
-    @keyframes sweep{
-      0%{ transform: translateX(-60%) skewX(-20deg); opacity:.0 }
-      20%{ opacity:.75 }
-      100%{ transform: translateX(260%) skewX(-20deg); opacity:.0 }
-    }
-    .metric{
-      display:flex; flex-direction:column; gap:2px;
-      align-items:flex-start;
-      justify-content:center;
-    }
-    .metric .k{ font-size:10px; color:rgba(234,240,255,.52); font-weight:700; }
-    .metric .v{ font-size:12px; font-weight:800; }
-    .v.good{ color: rgba(60,229,138,.95); }
-    .v.neu{ color: rgba(234,240,255,.82); }
-
-    .side{
-      display:flex; flex-direction:column; gap:12px;
-    }
-    .side .panel{ height:100%; }
-    .side .panel .rows .row{
-      grid-template-columns:1fr;
-      gap:8px;
-    }
-    .note{
-      font-size:10px;
-      color: rgba(234,240,255,.62);
-      line-height:1.4;
-    }
-
-    .base{
-      width: 92%;
-      margin: -10px auto 0;
-      height: 34px;
-      border-radius: 0 0 26px 26px;
-      background: linear-gradient(180deg, rgba(34,44,96,.40), rgba(10,12,34,.65));
-      border: 1px solid rgba(255,255,255,.12);
-      border-top: none;
-      box-shadow: 0 26px 80px rgba(0,0,0,.35);
-      position:relative;
-      overflow:hidden;
-    }
-    .base:before{
-      content:"";
-      position:absolute; inset:0;
-      background:
-        radial-gradient(closest-side at 50% 0%, rgba(255,255,255,.20), transparent 60%);
-      opacity:.35;
-    }
-
-    /* Mid cards */
-    .cards{
-      position:relative;
-      padding: 38px 0 0;
-      z-index:4;
-    }
-    .cards-grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
-      margin-top: 10px;
-    }
-    .card{
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(12,18,44,.56), rgba(10,14,36,.40));
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: var(--shadow2);
-      padding: 22px 22px;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      position:relative;
-      overflow:hidden;
-    }
-    .card:before{
-      content:"";
-      position:absolute; inset:-60px -40px auto -40px; height:120px;
-      background:
-        radial-gradient(closest-side at 40% 60%, rgba(106,168,255,.22), transparent 70%),
-        radial-gradient(closest-side at 70% 50%, rgba(139,99,255,.16), transparent 70%);
-      filter: blur(12px);
-      opacity:.7;
-    }
-    .card h3{
-      margin:0 0 8px;
-      font-size:18px;
-      font-weight:800;
-      letter-spacing:-.2px;
-    }
-    .card p{
-      margin:0 0 12px;
-      color: rgba(234,240,255,.68);
-      font-size:13px;
-      line-height:1.5;
-      max-width: 520px;
-    }
-    .checklist{
-      display:flex; flex-direction:column; gap:10px;
-      margin: 14px 0 0;
-      padding:0;
-      list-style:none;
-      position:relative;
-      z-index:1;
-    }
-    .checklist li{
-      display:flex; gap:10px; align-items:flex-start;
-      font-size:13px;
-      color: rgba(234,240,255,.70);
-      line-height:1.45;
-      font-weight:600;
-    }
-    .check{
-      width:18px; height:18px; flex:0 0 18px;
-      display:grid; place-items:center;
-      margin-top:1px;
-      border-radius:999px;
-      background: rgba(57,229,138,.14);
-      border: 1px solid rgba(57,229,138,.45);
-      box-shadow: 0 10px 22px rgba(57,229,138,.10);
-    }
-    .check svg{ width:12px; height:12px; }
-
-    /* Icon row “hill” divider */
-    .hill-wrap{
-      position:relative;
-      margin-top: 34px;
-      padding-top: 22px;
-      z-index:3;
-    }
-    .hill{
-      position:absolute; left:50%; transform:translateX(-50%);
-      top: 0px;
-      width: min(1040px, 96vw);
-      height: 190px;
-      filter: drop-shadow(0 30px 70px rgba(0,0,0,.48));
-      opacity: .95;
-      pointer-events:none;
-    }
-    .icons{
-      position:relative;
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-      padding-top: 54px;
-      align-items:start;
-      text-align:left;
-    }
-    .icon-card{
-      padding: 12px 10px 0;
-    }
-    .icon-top{
-      height: 58px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      margin-bottom: 10px;
-    }
-    .icon-badge{
-      width: 62px; height: 62px;
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(18,26,62,.60), rgba(10,14,36,.35));
-      border: 1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 18px 48px rgba(0,0,0,.35);
-      position:relative;
-      display:grid; place-items:center;
-    }
-    .icon-badge:before{
-      content:"";
-      position:absolute; inset:-20px -20px auto -20px; height:54px;
-      background:
-        radial-gradient(closest-side at 40% 60%, rgba(106,168,255,.22), transparent 70%),
-        radial-gradient(closest-side at 70% 60%, rgba(139,99,255,.20), transparent 70%);
-      filter: blur(14px);
-      opacity:.8;
-    }
-
-    .icon-card h4{
-      margin: 0 0 8px;
-      font-size: 14px;
-      font-weight: 900;
-      letter-spacing: -.1px;
-    }
-    .icon-card ul{
-      margin: 10px 0 0;
-      padding: 0;
-      list-style:none;
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
-    }
-    .icon-card li{
-      display:flex; gap:10px; align-items:flex-start;
-      color: rgba(234,240,255,.68);
-      font-size: 12.8px;
-      font-weight:600;
-      line-height:1.45;
-    }
-
-    /* CTA */
-    .cta{
-      padding: 52px 0 18px;
-      text-align:center;
-      position:relative;
-      z-index:2;
-    }
-    .cta h2{
-      margin: 0 0 10px;
-      font-size: 26px;
-      font-weight: 900;
-      letter-spacing: -.4px;
-    }
-    .cta p{
-      margin:0 auto 18px;
-      max-width: 680px;
-      color: rgba(234,240,255,.66);
-      font-size: 13.6px;
-      line-height: 1.55;
-    }
-    .cta .btn{
-      padding: 12px 26px;
-      border-radius: 10px;
-      background: linear-gradient(180deg, rgba(110,150,255,.28), rgba(70,90,210,.14));
-      border:1px solid rgba(255,255,255,.15);
-    }
-
-    footer{
-      padding: 16px 0 36px;
-      text-align:center;
-      color: rgba(234,240,255,.55);
-      font-size: 12px;
-    }
-    .footlinks{
-      display:flex; gap: 22px;
-      justify-content:center; align-items:center;
-      padding: 8px 0 10px;
-      color: rgba(234,240,255,.60);
-      font-weight:600;
-    }
-    .fineprint{
-      font-size: 10px;
-      opacity:.55;
-      max-width: 900px;
-      margin: 6px auto 0;
-      line-height:1.5;
-    }
-
-    /* Responsiveness */
-    @media (max-width: 900px){
-      .brand{ min-width:auto; }
-      .brand .tag{ display:none; }
-      .ui-main{ grid-template-columns: 1fr; }
-      .cards-grid{ grid-template-columns: 1fr; }
-      .icons{ grid-template-columns: 1fr; padding-top: 64px; }
-      .hill{ height: 230px; }
-      nav{ gap:14px; }
-    }
-    @media (max-width: 520px){
-      nav a:not(.btn){ display:none; }
-      .hero{ padding-top: 56px; }
-      .container{ width: calc(100% - 34px); }
-      .screen{ border-radius:12px; }
-      .ui{ inset:10px; }
-    }
-
-/* ------------------------------
-   MOBILE + OVERFLOW FIX PATCH
-   Put this at END of <style>
--------------------------------- */
-
-/* 1) Kill horizontal scroll for good (safe for this design) */
-html, body { overflow-x: clip; }
-@supports not (overflow-x: clip) {
-  html, body { overflow-x: hidden; }
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #06080d;
+  --bg-card: rgba(12, 16, 28, 0.85);
+  --bg-card-hover: rgba(18, 24, 42, 0.95);
+  --accent-cyan: #00e5ff;
+  --accent-green: #39ff85;
+  --accent-orange: #ff6b35;
+  --accent-purple: #a855f7;
+  --text-primary: #e8ecf4;
+  --text-secondary: #7b8ba5;
+  --text-dim: #3d4a63;
+  --border: rgba(255,255,255,0.06);
+  --glow-cyan: 0 0 40px rgba(0,229,255,0.15);
+  --glow-green: 0 0 30px rgba(57,255,133,0.12);
 }
 
-/* 2) Ensure absolutely-positioned decor never participates in layout overflow */
-.ribbons,
-.hill,
-.glow,
-.noise {
-  max-width: 100%;
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.6;
+  max-width: 100vw;
+}
+
+/* ===== ANIMATED BACKGROUND ===== */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
   pointer-events: none;
 }
-
-/* 3) Ribbons: stop them from being "wider than screen" on mobile */
-.ribbons{
-  left: 50%;
-  right: auto;
-  width: 140vw;              /* was huge negative inset; use vw sizing instead */
-  max-width: 1400px;
-  transform: translateX(-50%);
-  inset: -120px auto auto auto;
+.bg-grid canvas {
+  width: 100%;
+  height: 100%;
+}
+.bg-gradient-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+.bg-gradient-orb.orb1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0,229,255,0.3), transparent 70%);
+  top: -100px; left: -150px;
+  animation: orbFloat1 18s ease-in-out infinite;
+}
+.bg-gradient-orb.orb2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(168,85,247,0.25), transparent 70%);
+  bottom: 10%; right: -100px;
+  animation: orbFloat2 22s ease-in-out infinite;
+}
+.bg-gradient-orb.orb3 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(57,255,133,0.15), transparent 70%);
+  top: 50%; left: 40%;
+  animation: orbFloat3 20s ease-in-out infinite;
+}
+@keyframes orbFloat1 {
+  0%,100% { transform: translate(0,0); }
+  33% { transform: translate(80px, 60px); }
+  66% { transform: translate(-40px, 100px); }
+}
+@keyframes orbFloat2 {
+  0%,100% { transform: translate(0,0); }
+  33% { transform: translate(-60px, -80px); }
+  66% { transform: translate(50px, -40px); }
+}
+@keyframes orbFloat3 {
+  0%,100% { transform: translate(0,0); }
+  33% { transform: translate(50px, -60px); }
+  66% { transform: translate(-70px, 40px); }
 }
 
-/* Reduce ribbon intensity/height on mobile to avoid messy look */
-@media (max-width: 600px){
-  .ribbons{
-    width: 160vw;
-    height: 420px;
-    opacity: .75;
-  }
-  .ribbons:before{ filter: blur(20px); opacity: .7; }
-  .ribbons:after { filter: blur(28px); opacity: .45; }
+/* ===== GRAIN OVERLAY ===== */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px;
 }
 
-/* 4) Hero vertical spacing tighten */
-.hero { padding: 56px 0 8px; }            /* reduce top padding */
-@media (max-width: 520px){
-  .hero { padding-top: 44px; }
-  .hero p { font-size: 14px; line-height: 1.55; }
+/* ===== LAYOUT ===== */
+.content-wrapper {
+  position: relative;
+  z-index: 2;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
-/* 5) Laptop stage spacing + ensure nothing spills horizontally */
-.stage{
-  padding-bottom: 26px;                   /* was 42px */
-  margin-top: 22px;                       /* was 34px */
-  overflow: visible;
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 18px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(20px) saturate(1.2);
+  background: rgba(6,8,13,0.7);
+  border-bottom: 1px solid var(--border);
 }
-.laptop{ width: min(820px, 100%); }       /* keep it strictly inside */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.nav-logo-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+.nav-logo-text {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s;
+  letter-spacing: 0.01em;
+}
+.nav-links a:hover { color: var(--text-primary); }
+.nav-cta {
+  padding: 10px 24px !important;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green)) !important;
+  color: var(--bg-deep) !important;
+  border-radius: 8px;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.03em;
+  transition: transform 0.2s, box-shadow 0.2s !important;
+}
+.nav-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--glow-cyan);
+}
 
-/* Screen/UI: shrink inset slightly on mobile */
-@media (max-width: 520px){
-  .screen{ border-radius: 12px; }
-  .ui{ inset: 8px; border-radius: 10px; }
-  .ui-main{ padding: 10px; gap: 10px; }
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 40px 60px;
+  max-width: 1300px;
+  margin: 0 auto;
+  gap: 60px;
+}
+.hero-left {
+  flex: 1.1;
+  min-width: 0;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border: 1px solid rgba(0,229,255,0.2);
+  border-radius: 100px;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent-cyan);
+  margin-bottom: 28px;
+  background: rgba(0,229,255,0.04);
+  animation: fadeInUp 0.6s ease both;
+}
+.hero-badge .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.hero h1 {
+  font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.6s ease 0.1s both;
+}
+.hero h1 .gradient-text {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 18px;
+  color: var(--text-secondary);
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 36px;
+  font-weight: 300;
+  animation: fadeInUp 0.6s ease 0.2s both;
+}
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  animation: fadeInUp 0.6s ease 0.3s both;
+}
+.btn-primary {
+  padding: 14px 32px;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+  color: var(--bg-deep);
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.3s;
+  letter-spacing: 0.01em;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 50px rgba(0,229,255,0.25), 0 0 100px rgba(57,255,133,0.1);
+}
+.btn-secondary {
+  padding: 14px 28px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-secondary:hover {
+  border-color: rgba(255,255,255,0.15);
+  color: var(--text-primary);
+  background: rgba(255,255,255,0.03);
 }
 
-/* 6) Hill SVG: make it responsive + avoid forcing width overflow */
-.hill-wrap{
-  overflow: hidden;                       /* important: clip the hill */
+/* Hero math ticker */
+.hero-math-ticker {
+  margin-top: 40px;
+  display: flex;
+  gap: 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  animation: fadeInUp 0.6s ease 0.4s both;
 }
-.hill{
-  width: 140%;
-  max-width: none;
-  left: 50%;
-  transform: translateX(-50%);
+.hero-math-ticker span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ticker-val { color: var(--accent-cyan); font-weight: 500; }
+
+/* ===== HERO RIGHT — DASHBOARD MOCK ===== */
+.hero-right {
+  flex: 1;
+  min-width: 0;
+  animation: fadeInUp 0.8s ease 0.3s both;
+}
+.dash-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 80px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: hidden;
+}
+.dash-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,229,255,0.3), transparent);
+}
+.dash-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.dash-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+}
+.dash-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--accent-green);
+}
+.dash-status .dot {
+  width: 6px; height: 6px;
+  background: var(--accent-green);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
 }
 
-/* Mobile: stack icon section neatly and reduce top padding */
-@media (max-width: 900px){
-  .hill{ width: 180%; height: 210px; opacity: .90; }
-  .icons{ padding-top: 38px; }
+/* Chart area */
+.chart-area {
+  height: 160px;
+  margin-bottom: 20px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.2);
 }
-@media (max-width: 520px){
-  .hill{ width: 220%; height: 220px; opacity: .85; }
-  .icons{ padding-top: 28px; gap: 18px; }
-  .icon-top{ height: 52px; }
-  .icon-badge{ width: 58px; height: 58px; border-radius: 16px; }
+.chart-area canvas { width: 100%; height: 100%; }
+
+/* Pair rows */
+.pair-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  margin-bottom: 8px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.pair-row:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(0,229,255,0.15);
+}
+.pair-info { display: flex; align-items: center; gap: 12px; }
+.pair-tokens {
+  display: flex;
+  align-items: center;
+  gap: -4px;
+}
+.token-dot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  border: 2px solid var(--bg-deep);
+}
+.token-dot:nth-child(2) { margin-left: -8px; }
+.token-dot.sol { background: linear-gradient(135deg, #9945ff, #14f195); color: #fff; }
+.token-dot.eth { background: linear-gradient(135deg, #627eea, #3c5bdb); color: #fff; }
+.token-dot.btc { background: linear-gradient(135deg, #f7931a, #e8850e); color: #fff; }
+.token-dot.ada { background: linear-gradient(135deg, #0033ad, #0055ff); color: #fff; }
+.token-dot.arb { background: linear-gradient(135deg, #28a0f0, #1b6cb0); color: #fff; }
+.pair-name {
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+}
+.pair-label {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+}
+.pair-stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: right;
+}
+.stat-block {}
+.stat-label {
+  font-size: 10px;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.stat-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+}
+.stat-value.positive { color: var(--accent-green); }
+.stat-value.highlight { color: var(--accent-cyan); }
+.stat-value.warn { color: var(--accent-orange); }
+
+/* Mini sparkline inside pair row */
+.mini-spark {
+  width: 60px;
+  height: 28px;
+}
+.mini-spark canvas { width: 100%; height: 100%; }
+
+/* Signal bar */
+.signal-bar {
+  margin-top: 16px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(0,229,255,0.04);
+  border: 1px solid rgba(0,229,255,0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--accent-cyan);
+  animation: signalPulse 4s ease-in-out infinite;
+}
+@keyframes signalPulse {
+  0%,100% { border-color: rgba(0,229,255,0.1); }
+  50% { border-color: rgba(0,229,255,0.3); }
+}
+.signal-arrow {
+  color: var(--accent-green);
+  font-size: 14px;
+  font-weight: 700;
 }
 
-/* 7) Cards spacing on mobile (less “empty air”) */
-@media (max-width: 900px){
-  .cards{ padding-top: 24px; }
-  .card{ padding: 18px; }
-  .cards-grid{ gap: 16px; }
+/* ===== SCROLLING MATH FORMULA BAR ===== */
+.formula-bar {
+  overflow: hidden;
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,0.2);
+}
+.formula-track {
+  display: flex;
+  gap: 60px;
+  animation: scrollFormulas 30s linear infinite;
+  width: max-content;
+}
+@keyframes scrollFormulas {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.formula-item {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.formula-item .sym { color: var(--accent-cyan); font-weight: 500; }
+
+/* ===== FEATURES ===== */
+.features {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 120px 40px;
+}
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent-cyan);
+  margin-bottom: 16px;
+}
+.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 17px;
+  color: var(--text-secondary);
+  max-width: 560px;
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 60px;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+.feature-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.35s;
+  background: linear-gradient(135deg, rgba(0,229,255,0.03), rgba(57,255,133,0.02));
+}
+.feature-card:hover {
+  border-color: rgba(0,229,255,0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.feature-card:hover::after { opacity: 1; }
+.feature-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+  position: relative;
+  z-index: 1;
+}
+.feature-icon.cyan {
+  background: rgba(0,229,255,0.1);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(0,229,255,0.15);
+}
+.feature-icon.green {
+  background: rgba(57,255,133,0.1);
+  color: var(--accent-green);
+  border: 1px solid rgba(57,255,133,0.15);
+}
+.feature-icon.purple {
+  background: rgba(168,85,247,0.1);
+  color: var(--accent-purple);
+  border: 1px solid rgba(168,85,247,0.15);
+}
+.feature-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+.feature-card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  position: relative;
+  z-index: 1;
+  font-weight: 300;
 }
 
-/* 8) Nav: prevent weird wrapping/spacing */
-nav { flex-wrap: nowrap; }
-@media (max-width: 520px){
-  header { padding-top: 14px; }
-  .brand .name { gap: 8px; }
+
+
+/* ===== HOW IT WORKS ===== */
+.how-section {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 80px 40px 120px;
 }
-@media (max-width: 520px){
-  .brand { min-width: 0 !important; }
+.how-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+}
+.how-step {
+  padding: 36px 28px;
+  border-radius: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.how-step .step-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 48px;
+  font-weight: 800;
+  color: rgba(0,229,255,0.07);
+  position: absolute;
+  top: 16px; right: 20px;
+  line-height: 1;
+}
+.how-step h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  position: relative;
+}
+.how-step p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  font-weight: 300;
+  position: relative;
 }
 
-  </style>
+/* ===== CTA ===== */
+.cta-section {
+  padding: 120px 40px;
+  text-align: center;
+  position: relative;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0,229,255,0.08), transparent 70%);
+  pointer-events: none;
+}
+.cta-section h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  position: relative;
+}
+.cta-section p {
+  color: var(--text-secondary);
+  font-size: 17px;
+  margin-bottom: 36px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 300;
+  position: relative;
+}
+.cta-section .btn-primary { position: relative; }
+
+/* ===== FOOTER ===== */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+footer .footer-left {
+  font-size: 13px;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+}
+footer .footer-links {
+  display: flex;
+  gap: 24px;
+}
+footer .footer-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+footer .footer-links a:hover { color: var(--text-primary); }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .hero { flex-direction: column; padding-top: 140px; gap: 40px; }
+  .features-grid, .how-steps { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  nav { padding: 14px 20px; }
+  .nav-links { gap: 16px; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .hero { padding: 120px 20px 40px; }
+  .hero-right { width: 100%; max-width: 100%; overflow: hidden; }
+  .dash-card { padding: 16px; }
+  .pair-row { padding: 10px; gap: 8px; flex-wrap: wrap; }
+  .pair-stats { gap: 10px; }
+  .mini-spark { display: none; }
+  .signal-bar { font-size: 11px; }
+  .features, .how-section { padding-left: 20px; padding-right: 20px; }
+  .features-grid, .how-steps { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; align-items: flex-start; }
+  .hero-math-ticker { flex-wrap: wrap; gap: 14px; }
+  .formula-bar { max-width: 100vw; }
+  .cta-section { padding: 80px 20px; }
+  footer { flex-direction: column; gap: 16px; text-align: center; padding: 30px 20px; }
+}
+</style>
 </head>
-
 <body>
-  <div class="noise"></div>
 
-  <header>
-    <div class="container nav">
-      <a class="brand" href="#">
-        <div class="logo" aria-label="Logo">
-          <!-- Placeholder logo (swap with your SVG) -->
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2.2" y="2.2" width="23.6" height="23.6" rx="7" fill="rgba(106,168,255,.16)" stroke="rgba(106,168,255,.55)"/>
-            <path d="M9 18.2V9.8M19 18.2V9.8" stroke="rgba(234,240,255,.92)" stroke-width="2.2" stroke-linecap="round"/>
-            <path d="M9 14h10" stroke="rgba(57,229,138,.95)" stroke-width="2.2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="name">
-          <span>Hyperpairs</span>
-          <span class="tag">Hedged Futures Trading Made Simple</span>
-        </div>
-      </a>
+<!-- Background -->
+<div class="bg-grid"><canvas id="gridCanvas"></canvas></div>
+<div class="bg-gradient-orb orb1"></div>
+<div class="bg-gradient-orb orb2"></div>
+<div class="bg-gradient-orb orb3"></div>
+<div class="grain-overlay"></div>
 
-      <nav>
-        <a href="#how">How It Works</a>
-        <!-- <a href="#security">Security</a> -->
-        <a class="btn" href="https://app.hyperpairs.com">Launch App</a>
-      </nav>
+<div class="content-wrapper">
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="https://hyperpairs.com/logo.png" alt="Hyperpairs" class="nav-logo-img">
+    <span class="nav-logo-text">Hyperpairs</span>
+  </a>
+  <div class="nav-links">
+    <a href="#how">How It Works</a>
+    <a href="#features">Features</a>
+    <a href="https://app.hyperpairs.com" class="nav-cta">Launch App</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Live Pair Signals
     </div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="ribbons"></div>
-
-      <div class="container hero-inner">
-        <h1>Trade Perpetual Pairs, Hedge Smarter.</h1>
-        <p>
-          Leverage sophisticated math to trade futures pairs while<br />
-          minimizing liquidation risk.
-        </p>
-
-        <div class="stage" aria-label="Product preview">
-          <div class="glow"></div>
-
-          <div class="laptop">
-            <div class="screen">
-              <div class="ui">
-                <div class="ui-top">
-                  <div class="ui-brand">
-                    <span style="display:inline-flex; gap:6px; align-items:center;">
-                      <span style="width:16px;height:16px;border-radius:5px;background:rgba(106,168,255,.24);border:1px solid rgba(106,168,255,.5);display:inline-block;"></span>
-                      Hyperpairs
-                    </span>
-                  </div>
-                  <div class="ui-tabs">
-                    <span>Trade Shares</span>
-                    <span>Pairs</span>
-                    <span>Wins</span>
-                  </div>
-                  <div style="display:flex; gap:10px; align-items:center;">
-                    <span style="opacity:.7">Force Connect</span>
-                    <span style="width:24px;height:14px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.12);position:relative;">
-                      <span style="position:absolute;left:2px;top:2px;width:10px;height:10px;border-radius:999px;background:rgba(106,168,255,.85);"></span>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="ui-main">
-                  <div class="panel h">
-                    <div class="panel-title">Pairs • Mean Reversion • Volatility • Delta Convergence</div>
-                    <div class="rows">
-                      <div class="row">
-                        <div>
-                          <div class="pair">SOL-PERP</div>
-                          <div class="sub">ETH-PERP</div>
-                        </div>
-                        <div class="spark" aria-hidden="true"></div>
-                        <div class="metric">
-                          <div class="k">Score</div>
-                          <div class="v good">+0.84</div>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div>
-                          <div class="pair">BTC-PERP</div>
-                          <div class="sub">ETH-PERP</div>
-                        </div>
-                        <div class="spark" aria-hidden="true"></div>
-                        <div class="metric">
-                          <div class="k">Score</div>
-                          <div class="v good">+0.61</div>
-                        </div>
-                      </div>
-
-                      <div class="row" style="grid-template-columns:1.4fr .8fr .8fr;">
-                        <div>
-                          <div class="pair">ADA-PERP <span style="color:rgba(234,240,255,.55);font-weight:700;">vs</span> ETH-PERP</div>
-                          <div class="sub">Spread / Regression / Z-score</div>
-                        </div>
-                        <div class="metric">
-                          <div class="k">Z</div>
-                          <div class="v neu">1.72</div>
-                        </div>
-                        <div class="metric">
-                          <div class="k">Funding</div>
-                          <div class="v good">-0.004%</div>
-                        </div>
-                      </div>
-
-                      <div class="row" style="grid-template-columns:1.4fr .8fr .8fr;">
-                        <div>
-                          <div class="pair">ARB-PERP <span style="color:rgba(234,240,255,.55);font-weight:700;">vs</span> SOL-PERP</div>
-                          <div class="sub">Coin Support / Liquidity</div>
-                        </div>
-                        <div class="metric">
-                          <div class="k">Edge</div>
-                          <div class="v good">0.19</div>
-                        </div>
-                        <div class="metric">
-                          <div class="k">Risk</div>
-                          <div class="v neu">Low</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="side">
-                    <div class="panel">
-                      <div class="panel-title">Dashboard Earned</div>
-                      <div class="rows">
-                        <div class="row">
-                          <div class="note">
-                            <b style="color:rgba(234,240,255,.9)">Connection</b> • Ready<br/>
-                            <span style="opacity:.8">Slippage / spread warnings, funding, unlocks</span>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="note">
-                            <b style="color:rgba(234,240,255,.9)">Setup</b> • Auto-sizing<br/>
-                            <span style="opacity:.8">Long one perp, short another — pair hedging 24/7</span>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="note">
-                            <b style="color:rgba(234,240,255,.9)">Controls</b> • Guardrails<br/>
-                            <span style="opacity:.8">Stop logic, liquidation distance, position constraints</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="panel">
-                      <div class="panel-title">Recent Signals</div>
-                      <div class="rows">
-                        <div class="row">
-                          <div class="note">
-                            <b style="color:rgba(60,229,138,.95)">▲</b> SOL/ETH • Convergence<br/>
-                            <span style="opacity:.8">You’re within entry band</span>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="note">
-                            <b style="color:rgba(60,229,138,.95)">▲</b> BTC/ETH • Mean Reversion<br/>
-                            <span style="opacity:.8">Funding improving, spread widening</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div><!-- ui-main -->
-              </div><!-- ui -->
-            </div><!-- screen -->
-
-            <div class="base"></div>
-          </div><!-- laptop -->
-        </div><!-- stage -->
-      </div><!-- hero-inner -->
-    </section>
-
-    <section class="cards container" id="how">
-      <div class="cards-grid">
-        <div class="card">
-          <h3>Hedge Perps without Guessing</h3>
-          <p>Get a curated dashboard of possible pair trades in seconds.</p>
-          <ul class="checklist">
-            <li>
-              <span class="check">
-                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              See which pairs are primed to trade
-            </li>
-            <li>
-              <span class="check">
-                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              Act or pass based on the math
-            </li>
-            <li>
-              <span class="check">
-                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              Stay active without chasing signals
-            </li>
-          </ul>
+    <h1>Trade Perpetual Pairs,<br><span class="gradient-text">Hedge Smarter.</span></h1>
+    <p class="hero-sub">Leverage sophisticated quantitative models to trade futures pairs while minimizing liquidation risk. Mean reversion, volatility spreads, and delta convergence — all in one dashboard.</p>
+    <div class="hero-actions">
+      <a href="https://app.hyperpairs.com" class="btn-primary">Launch App →</a>
+      <a href="#how" class="btn-secondary">How It Works</a>
+    </div>
+    <div class="hero-math-ticker">
+      <span>Z-score <span class="ticker-val" id="tickerZ">1.72</span></span>
+      <span>β <span class="ticker-val" id="tickerBeta">0.84</span></span>
+      <span>ΔConv <span class="ticker-val" id="tickerDelta">+0.019</span></span>
+      <span>σ <span class="ticker-val" id="tickerSigma">0.043</span></span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="dash-card">
+      <div class="dash-header">
+        <span class="dash-title">Pair Correlation Dashboard</span>
+        <span class="dash-status"><span class="dot"></span> Live</span>
+      </div>
+      <div class="chart-area">
+        <canvas id="mainChart"></canvas>
+      </div>
+      <!-- Pair 1 -->
+      <div class="pair-row">
+        <div class="pair-info">
+          <div class="pair-tokens">
+            <div class="token-dot sol">S</div>
+            <div class="token-dot eth">E</div>
+          </div>
+          <div>
+            <div class="pair-name">SOL / ETH</div>
+            <div class="pair-label">Mean Reversion</div>
+          </div>
         </div>
-
-        <div class="card">
-          <h3>Real, Quantitative Signals</h3>
-          <p>Pair trading on mean reversion, volatility spreads, and delta convergence.</p>
-          <ul class="checklist">
-            <li>
-              <span class="check">
-                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              Option expirations, token unlocks, prediction markets, and funding captured in real-time.
-            </li>
-            <li>
-              <span class="check">
-                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              Statistical relationships surfaced, not guesses
-            </li>
-          </ul>
+        <div class="pair-stats">
+          <div class="mini-spark"><canvas id="spark1"></canvas></div>
+          <div class="stat-block">
+            <div class="stat-label">Score</div>
+            <div class="stat-value positive">+0.84</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Z</div>
+            <div class="stat-value highlight">1.72</div>
+          </div>
         </div>
       </div>
-
-      <div class="hill-wrap">
-        <!-- Wavy hill base behind icons (SVG) -->
-        <svg class="hill" viewBox="0 0 1200 260" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0" stop-color="rgba(255,255,255,.08)"/>
-              <stop offset="1" stop-color="rgba(255,255,255,0)"/>
-            </linearGradient>
-            <radialGradient id="rg" cx="50%" cy="35%" r="70%">
-              <stop offset="0" stop-color="rgba(106,168,255,.18)"/>
-              <stop offset="50%" stop-color="rgba(139,99,255,.12)"/>
-              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
-            </radialGradient>
-          </defs>
-          <path d="M0,170 C170,120 260,180 410,150 C540,124 650,90 790,130 C930,170 1010,115 1200,160 L1200,260 L0,260 Z"
-                fill="rgba(10,14,36,.68)" stroke="rgba(255,255,255,.10)" />
-          <path d="M0,170 C170,120 260,180 410,150 C540,124 650,90 790,130 C930,170 1010,115 1200,160"
-                fill="none" stroke="rgba(255,255,255,.10)" />
-          <ellipse cx="600" cy="145" rx="520" ry="170" fill="url(#rg)" opacity=".85"/>
-          <path d="M0,192 C220,145 300,220 470,185 C620,152 720,140 860,172 C990,202 1070,160 1200,188"
-                fill="none" stroke="url(#g1)" stroke-width="3" opacity=".85"/>
-        </svg>
-
-        <div class="icons">
-          <!-- Icon 1 -->
-          <div class="icon-card">
-            <div class="icon-top">
-              <div class="icon-badge" aria-hidden="true">
-                <!-- Paper / list icon -->
-                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 3h7l3 3v15a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"
-                        stroke="rgba(234,240,255,.86)" stroke-width="1.6"/>
-                  <path d="M14 3v4a2 2 0 0 0 2 2h4"
-                        stroke="rgba(234,240,255,.62)" stroke-width="1.6"/>
-                  <path d="M8 12h8M8 16h8" stroke="rgba(57,229,138,.95)" stroke-width="1.8" stroke-linecap="round"/>
-                  <path d="M8 9h4" stroke="rgba(234,240,255,.65)" stroke-width="1.6" stroke-linecap="round"/>
-                </svg>
-              </div>
-            </div>
-            <h4>Pair based information</h4>
-            <ul>
-              <li>
-                <span class="check">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-                Get a curated dashboard of possible pair trades in seconds.
-              </li>
-              <li>
-                <span class="check">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-                See which pairs are primed to <span style="color:rgba(57,229,138,.95)">trade</span>
-              </li>
-              <li>
-                <span class="check">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-                Act or pass based on the math
-              </li>
-              <li>
-                <span class="check">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-                Stay active without chasing signals
-              </li>
-            </ul>
+      <!-- Pair 2 -->
+      <div class="pair-row">
+        <div class="pair-info">
+          <div class="pair-tokens">
+            <div class="token-dot btc">B</div>
+            <div class="token-dot eth">E</div>
           </div>
-
-          <!-- Icon 2 -->
-          <div class="icon-card">
-            <div class="icon-top">
-              <div class="icon-badge" aria-hidden="true">
-                <!-- Swirl arrows icon -->
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 8a7 7 0 0 1 12 2" stroke="rgba(234,240,255,.78)" stroke-width="1.6" stroke-linecap="round"/>
-                  <path d="M19 10V6l-3 2.6" stroke="rgba(106,168,255,.95)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M17 16a7 7 0 0 1-12-2" stroke="rgba(234,240,255,.72)" stroke-width="1.6" stroke-linecap="round"/>
-                  <path d="M5 14v4l3-2.6" stroke="rgba(57,229,138,.95)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                  <circle cx="12" cy="12" r="2.2" fill="rgba(139,99,255,.35)" stroke="rgba(139,99,255,.75)"/>
-                </svg>
-              </div>
-            </div>
-            <h4>Real, Quantitative Signals</h4>
-            <ul>
-              <li>
-                <span class="check">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-                Pair trading on mean reversion, volatility spreads, and delta convergence.
-              </li>
-              <li>
-                <span class="check">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-                Option expirations, token unlocks, prediction markets, and funding captured in real-time.
-              </li>
-            </ul>
+          <div>
+            <div class="pair-name">BTC / ETH</div>
+            <div class="pair-label">Delta Convergence</div>
           </div>
-
-          <!-- Icon 3 -->
-          <div class="icon-card" id="security">
-            <div class="icon-top">
-              <div class="icon-badge" aria-hidden="true">
-                <!-- Shield icon -->
-                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 3l8 4v6c0 5-3.4 8.8-8 9.9C7.4 21.8 4 18 4 13V7l8-4Z"
-                        stroke="rgba(234,240,255,.84)" stroke-width="1.6" />
-                  <path d="M9.2 12.3l2 2 3.8-4.2" stroke="rgba(57,229,138,.95)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </div>
-            <h4>Reduce Liquidation Risk</h4>
-            <ul>
-              <li>
-                <span class="check">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-                Trade futures with structure and risk controls.
-              </li>
-              <li>
-                <span class="check">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-                Long one perp, short another — pair trading 24/7
-              </li>
-              <li>
-                <span class="check">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-                Trade with leverage while hedging
-              </li>
-              <li>
-                <span class="check">
-                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.2 10.4l3.2 3.2L16 5.8" stroke="rgba(57,229,138,.95)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-                Stay active and less exposed to big swings
-              </li>
-            </ul>
+        </div>
+        <div class="pair-stats">
+          <div class="mini-spark"><canvas id="spark2"></canvas></div>
+          <div class="stat-block">
+            <div class="stat-label">Score</div>
+            <div class="stat-value positive">+0.61</div>
           </div>
-        </div><!-- icons -->
-      </div><!-- hill-wrap -->
-    </section>
-
-    <section class="cta container" id="launch">
-      <h2>Ready to Hedge Perp Pairs?</h2>
-      <p>Say goodbye to FOMO and liquidation roulette. Start trading perpetual pairs with math-driven setups.</p>
-      <a class="btn" href="https://app.hyperpairs.com">Launch App</a>
-    </section>
-  </main>
-
-  <footer class="container">
-    <div class="footlinks">
-      <a href="#how">How It Works</a>
-      <a href="#security">Security</a>
-      <a href="#">Twitter</a>
+          <div class="stat-block">
+            <div class="stat-label">Fund</div>
+            <div class="stat-value warn">-0.004%</div>
+          </div>
+        </div>
+      </div>
+      <!-- Pair 3 -->
+      <div class="pair-row">
+        <div class="pair-info">
+          <div class="pair-tokens">
+            <div class="token-dot arb">A</div>
+            <div class="token-dot sol">S</div>
+          </div>
+          <div>
+            <div class="pair-name">ARB / SOL</div>
+            <div class="pair-label">Volatility Spread</div>
+          </div>
+        </div>
+        <div class="pair-stats">
+          <div class="mini-spark"><canvas id="spark3"></canvas></div>
+          <div class="stat-block">
+            <div class="stat-label">Edge</div>
+            <div class="stat-value positive">0.19</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Risk</div>
+            <div class="stat-value highlight">Low</div>
+          </div>
+        </div>
+      </div>
+      <div class="signal-bar">
+        <span class="signal-arrow">▲</span>
+        SOL/ETH entering convergence band — signal active
+      </div>
     </div>
-    <div class="fineprint">
-      Futures trading, the total termination is in the best associated to you volatile, for our help you did omissions &amp; our liquidation of forms cometh.
-    </div>
-    </br>
-   <div class="footer">
-    Hyperpairs © 2026 — Pair-Based Futures Trading
-   </div> 
-  </footer>
+  </div>
+</section>
 
-  <script>
-    // Optional: smooth anchor scrolling
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', (e)=>{
-        const id = a.getAttribute('href');
-        if(!id || id === '#') return;
-        const el = document.querySelector(id);
-        if(!el) return;
-        e.preventDefault();
-        el.scrollIntoView({behavior:'smooth', block:'start'});
-      });
+<!-- FORMULA SCROLL BAR -->
+<div class="formula-bar">
+  <div class="formula-track" id="formulaTrack">
+    <div class="formula-item"><span class="sym">Z</span> = (Spread − μ) / σ</div>
+    <div class="formula-item"><span class="sym">β</span> = Cov(A,B) / Var(B)</div>
+    <div class="formula-item"><span class="sym">Δ</span> = ∂V/∂S</div>
+    <div class="formula-item"><span class="sym">ρ</span> = Σ(xᵢ−x̄)(yᵢ−ȳ) / √[Σ(xᵢ−x̄)²·Σ(yᵢ−ȳ)²]</div>
+    <div class="formula-item"><span class="sym">σ²</span> = Σ(xᵢ−μ)² / N</div>
+    <div class="formula-item"><span class="sym">H</span> = log(R/S) / log(n)</div>
+    <div class="formula-item"><span class="sym">γ</span> = E[(X−μ)³] / σ³</div>
+    <div class="formula-item"><span class="sym">ADF</span> Δyₜ = αyₜ₋₁ + Σβⱼ Δyₜ₋ⱼ + εₜ</div>
+    <!-- Duplicate for seamless scroll -->
+    <div class="formula-item"><span class="sym">Z</span> = (Spread − μ) / σ</div>
+    <div class="formula-item"><span class="sym">β</span> = Cov(A,B) / Var(B)</div>
+    <div class="formula-item"><span class="sym">Δ</span> = ∂V/∂S</div>
+    <div class="formula-item"><span class="sym">ρ</span> = Σ(xᵢ−x̄)(yᵢ−ȳ) / √[Σ(xᵢ−x̄)²·Σ(yᵢ−ȳ)²]</div>
+    <div class="formula-item"><span class="sym">σ²</span> = Σ(xᵢ−μ)² / N</div>
+    <div class="formula-item"><span class="sym">H</span> = log(R/S) / log(n)</div>
+    <div class="formula-item"><span class="sym">γ</span> = E[(X−μ)³] / σ³</div>
+    <div class="formula-item"><span class="sym">ADF</span> Δyₜ = αyₜ₋₁ + Σβⱼ Δyₜ₋ⱼ + εₜ</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="reveal">
+    <div class="section-label">Features</div>
+    <h2 class="section-title">Quantitative Edge,<br>Zero Guesswork.</h2>
+    <p class="section-sub">Every signal is grounded in statistical relationships — cointegration tests, z-score triggers, and funding rate analysis.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-icon cyan">⟐</div>
+      <h3>Pair Correlation Dashboard</h3>
+      <p>See which perpetual pairs are primed to trade. Curated signals updated in real-time so you can act or pass based on the math — not gut feeling.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon green">∿</div>
+      <h3>Mean Reversion Signals</h3>
+      <p>Statistical spread analysis with z-score triggers. Track when pairs deviate from equilibrium and capture the reversion back to the mean.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon purple">Δ</div>
+      <h3>Delta Convergence</h3>
+      <p>Monitor delta and gamma exposure across your pairs. Option expirations, token unlocks, and prediction markets all captured in real-time.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon cyan">◈</div>
+      <h3>Liquidation Guardrails</h3>
+      <p>Long one perp, short another — structured pair hedging 24/7. Position constraints, liquidation distance monitoring, and stop logic built in.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon green">₣</div>
+      <h3>Funding Rate Capture</h3>
+      <p>Track funding rates across pairs to find edges. Slippage warnings, spread analysis, and funding differentials surfaced automatically.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon purple">⊞</div>
+      <h3>Auto Position Sizing</h3>
+      <p>Kelly criterion-inspired sizing. Automatically calibrate position sizes based on signal strength, volatility, and your risk parameters.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="reveal">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">Three Steps to<br>Structured Trading.</h2>
+    <p class="section-sub">Connect, analyze, and execute — all with quantitative guardrails protecting your positions.</p>
+  </div>
+  <div class="how-steps">
+    <div class="how-step reveal">
+      <div class="step-num">01</div>
+      <h3>Connect & Scan</h3>
+      <p>Link your exchange account. Hyperpairs instantly scans hundreds of perpetual pairs for cointegration, spread anomalies, and funding opportunities.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="step-num">02</div>
+      <h3>Analyze Signals</h3>
+      <p>Review curated pair setups with z-scores, correlation matrices, and risk scores. Every signal includes entry bands, target spreads, and stop levels.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="step-num">03</div>
+      <h3>Execute & Monitor</h3>
+      <p>Enter pair trades with auto-sized positions. Real-time monitoring tracks spread convergence, funding flow, and liquidation distance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="reveal">
+    <h2>Ready to <span class="gradient-text">Hedge Perp Pairs</span>?</h2>
+    <p>Say goodbye to FOMO and liquidation roulette. Start trading perpetual pairs with math-driven setups.</p>
+    <a href="https://app.hyperpairs.com" class="btn-primary">Launch App →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">Hyperpairs © 2026 — Pair-Based Futures Trading</div>
+  <div class="footer-links">
+    <a href="#how">How It Works</a>
+    <a href="#features">Features</a>
+    <a href="#">Twitter</a>
+    <a href="#">Docs</a>
+  </div>
+</footer>
+
+</div>
+
+<script>
+// ===== GRID BACKGROUND =====
+(function() {
+  const canvas = document.getElementById('gridCanvas');
+  const ctx = canvas.getContext('2d');
+  let w, h;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function drawGrid() {
+    ctx.clearRect(0, 0, w, h);
+    const spacing = 60;
+    ctx.strokeStyle = 'rgba(255,255,255,0.018)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < w; x += spacing) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, h);
+      ctx.stroke();
+    }
+    for (let y = 0; y < h; y += spacing) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(w, y);
+      ctx.stroke();
+    }
+  }
+  drawGrid();
+  window.addEventListener('resize', drawGrid);
+})();
+
+// ===== MAIN CHART (Spread Convergence) =====
+(function() {
+  const canvas = document.getElementById('mainChart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  let w, h;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    w = rect.width;
+    h = rect.height;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.scale(dpr, dpr);
+  }
+  resize();
+
+  // Generate mean-reverting spread data
+  const points = 120;
+  let data1 = [], data2 = [];
+  let v1 = 0, v2 = 0;
+  for (let i = 0; i < points; i++) {
+    v1 += (Math.random() - 0.5) * 3 - v1 * 0.03;
+    v2 += (Math.random() - 0.5) * 2.5 - v2 * 0.04;
+    data1.push(v1);
+    data2.push(v2);
+  }
+
+  let offset = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    offset += 0.3;
+
+    // Mean line
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(0, h / 2);
+    ctx.lineTo(w, h / 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // +/- band
+    ctx.fillStyle = 'rgba(0,229,255,0.03)';
+    ctx.fillRect(0, h * 0.3, w, h * 0.4);
+
+    function drawLine(data, color, alpha) {
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.globalAlpha = alpha;
+      for (let i = 0; i < points; i++) {
+        const x = (i / (points - 1)) * w;
+        const idx = Math.floor((i + offset) % points);
+        const y = h / 2 + data[idx] * (h / 6);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+
+    drawLine(data1, '#00e5ff', 0.8);
+    drawLine(data2, '#39ff85', 0.6);
+
+    // Labels
+    ctx.font = '10px JetBrains Mono';
+    ctx.fillStyle = '#3d4a63';
+    ctx.fillText('SOL-PERP', 8, 16);
+    ctx.fillStyle = '#00e5ff';
+    ctx.fillRect(70, 10, 20, 2);
+    ctx.fillStyle = '#3d4a63';
+    ctx.fillText('ETH-PERP', 98, 16);
+    ctx.fillStyle = '#39ff85';
+    ctx.fillRect(168, 10, 20, 2);
+
+    ctx.fillStyle = '#3d4a63';
+    ctx.fillText('+2σ', w - 30, h * 0.3 + 12);
+    ctx.fillText('−2σ', w - 30, h * 0.7 - 4);
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', () => { resize(); });
+})();
+
+// ===== SPARKLINES =====
+function drawSparkline(id, color) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  const w = rect.width, h = rect.height;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+  ctx.scale(dpr, dpr);
+
+  const pts = 20;
+  let data = [];
+  let v = 0;
+  for (let i = 0; i < pts; i++) {
+    v += (Math.random() - 0.48) * 2 - v * 0.05;
+    data.push(v);
+  }
+  const min = Math.min(...data), max = Math.max(...data);
+
+  ctx.beginPath();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.5;
+  for (let i = 0; i < pts; i++) {
+    const x = (i / (pts - 1)) * w;
+    const y = h - ((data[i] - min) / (max - min || 1)) * h * 0.8 - h * 0.1;
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+}
+drawSparkline('spark1', '#39ff85');
+drawSparkline('spark2', '#00e5ff');
+drawSparkline('spark3', '#a855f7');
+
+// ===== MATH TICKER ANIMATION =====
+(function() {
+  const ids = ['tickerZ', 'tickerBeta', 'tickerDelta', 'tickerSigma'];
+  const bases = [1.72, 0.84, 0.019, 0.043];
+  setInterval(() => {
+    ids.forEach((id, i) => {
+      const el = document.getElementById(id);
+      const v = bases[i] + (Math.random() - 0.5) * bases[i] * 0.1;
+      el.textContent = (i === 2 ? '+' : '') + v.toFixed(i === 0 ? 2 : 3);
     });
-  </script>
+  }, 2000);
+})();
+
+// ===== SCROLL REVEAL =====
+(function() {
+  const els = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => obs.observe(el));
+})();
+
+
+</script>
 </body>
 </html>
